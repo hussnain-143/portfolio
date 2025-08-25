@@ -2,9 +2,16 @@ import React from 'react'
 
 const experienceData = [
   {
+    role: 'Front-End Developer',
+    company: 'Poxito',
+    period: 'Aug 2025 – Present',
+    description:
+     'Developed and maintained web applications using React, Node.js, and Tailwind CSS, as well as building and customizing websites with WordPress. Collaborated with cross-functional teams to deliver high-quality software solutions.'
+  },
+  {
     role: 'WordPress Developer',
     company: 'LDNinjas',
-    period: 'Jun 2025 – Present',
+    period: 'Jun 2025 – Aug 2025',
     description:
       'Developing custom plugins, enhancing features, and building admin dashboards.',
   },
