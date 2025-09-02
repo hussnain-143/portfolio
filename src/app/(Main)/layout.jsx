@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import Clock from '@/components/Clock'
 
 const Layout = ({ children }) => {
   return (
@@ -8,6 +9,7 @@ const Layout = ({ children }) => {
         <Header/>
       <main className="flex-grow">
         {children}
+        <Clock/>
       </main>
         <Footer/>
     </div>
