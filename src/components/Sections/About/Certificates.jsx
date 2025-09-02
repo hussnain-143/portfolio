@@ -47,7 +47,7 @@ const Certificates = () => {
                             />
 
                             {/* Hover Overlay */}
-                            <div className="absolute inset-0 bg-black/70 text-white opacity-0 group-hover:opacity-100 transition duration-500 p-6 flex flex-col justify-end">
+                            <div className="absolute inset-0 bg-black/60 text-white opacity-0 group-hover:opacity-100 transition duration-500 p-6 flex flex-col justify-end">
                                 <h3 className="text-lg font-semibold">{cert.title}</h3>
                                 <p className="text-sm">{cert.institute}</p>
                                 <p className="text-xs text-gray-300">{cert.date}</p>

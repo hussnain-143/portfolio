@@ -7,14 +7,14 @@ import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/f
 const Contact = () => {
   const [state, handleSubmit] = useForm('mzzglvaz')
   const [showSuccess, setShowSuccess] = useState(false)
-  const [resetKey, setResetKey] = useState(0) // helps to reset form fields
+  const [resetKey, setResetKey] = useState(0)
 
   useEffect(() => {
     if (state.succeeded) {
       setShowSuccess(true)
       const timer = setTimeout(() => {
         setShowSuccess(false)
-        setResetKey((prev) => prev + 1) // trigger rerender to reset form
+        setResetKey((prev) => prev + 1)
       }, 5000)
       return () => clearTimeout(timer)
     }
@@ -46,7 +46,7 @@ const Contact = () => {
               </div>
               <div className="flex items-center gap-3">
                 <FaMapMarkerAlt className="text-xl" />
-                <span>Abbottabad, Pakistan</span>
+                <span>Islamabad, Pakistan</span>
               </div>
             </div>
           </div>
