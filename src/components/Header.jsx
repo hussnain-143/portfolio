@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 // Menu toggle icons
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
@@ -20,11 +21,11 @@ const Header = () => {
   ]
 
   return (
-    <header className="bg-lime-400">
+    <header className="bg-lime-400 sticky top-0 z-999">
       <div className="container m-auto px-6 py-5 md:py-0">
         <div className="flex justify-between items-center">
-          <div className="text-3xl font-bold">
-            <h2>H<span className="text-lime-600">.ahmed</span></h2>
+          <div className='my-2'>
+            <Image src="/logo.svg" alt="Logo" width={100} height={10} />
           </div>
 
           {/* Desktop Nav */}
