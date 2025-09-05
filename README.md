@@ -6,8 +6,7 @@ Welcome to the official repository of my personal portfolio website, built using
 
 ## 🌐 Live Demo
 
-> [View Website](https://your-portfolio-domain.com)  
-> _(Replace with your actual domain)_
+> [View Website](https://h-a-portfolio.netlify.app/)
 
 ---
 
