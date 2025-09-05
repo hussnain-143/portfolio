@@ -1,14 +1,15 @@
 import Link from 'next/link'
 import React from 'react'
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
+import Image from 'next/image'
 
 const Footer = () => {
   return (
     <footer className="bg-lime-400 text-black py-6 mt-10">
       <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
         {/* Left: Branding */}
-        <div className="text-xl font-bold mb-4 md:mb-0">
-          <h2>H<span className="text-lime-700">.ahmed</span></h2>
+        <div>
+          <Image src="/logo.svg" alt="Logo" width={70} height={30} />
         </div>
 
         {/* Middle: Links */}
