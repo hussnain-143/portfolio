@@ -4,7 +4,7 @@ Welcome to the official repository of my personal portfolio website, built using
 
 ---
 
-## 🌐 Live Demo
+## 🌐 Live
 
 > [View Website](https://h-a-portfolio.netlify.app/)
 
