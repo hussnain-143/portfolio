@@ -5,13 +5,13 @@ import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa'
 
 const projects = [
   {
-    title: 'Cloud Control Panel',
+    title: 'Rosy Garden',
     description:
-      'A modern control panel for managing cloud infrastructure and server licenses with a focus on simplicity, scalability.',
-    image: '/project/CloudCPanel.png',
-    tags: ['JavaScript', 'PHP', 'Python'],
-    liveLink: 'https://cloudcpanel.com/',
-    githubLink: 'https://github.com/hussnain-143',
+      'The ultimate flower destination — a paradise for flower enthusiasts and nature lovers. Visitors can explore winding pathways and hidden corners filled with a kaleidoscope of colors and enchanting fragrances.',
+    image: '/project/rosy-garden.png',
+    tags: ['React', 'Next.js', 'Tailwind'],
+    liveLink: 'https://rosy-garden-shop.vercel.app/',
+    githubLink: 'https://github.com/hussnain-143/rosy-garden',
   },
   {
     title: 'E.Store (Ecommerce)',
