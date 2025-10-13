@@ -25,7 +25,7 @@ const Clock = () => {
 
   return (
     <div
-      className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 
+      className="fixed bottom-50 right-3 sm:bottom-50 sm:right-4 
                  flex items-center justify-center 
                  w-28 h-28 sm:w-36 sm:h-36 lg:w-44 lg:h-44 
                  rounded-full border-2 border-lime-400/50 
