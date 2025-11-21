@@ -1,11 +1,12 @@
 import React from 'react'
-import { FaLaptopCode, FaDatabase, FaWordpress, FaTools } from 'react-icons/fa'
+import { FaLaptopCode, FaDatabase, FaWordpress, FaTools, FaCode } from 'react-icons/fa'
 
 const Skill = () => {
   const skills = [
     {
-      name: 'Front End',
-      icon: <FaLaptopCode className="text-4xl text-lime-600 mb-2 mx-auto" />,
+      name: 'Front End Development',
+      icon: <FaLaptopCode className="text-5xl mb-3 mx-auto" />,
+      gradient: 'from-purple-500 to-pink-500',
       items: [
         { tech: 'HTML', level: 'Expert' },
         { tech: 'CSS / Tailwind / Bootstrap', level: 'Expert' },
@@ -15,32 +16,39 @@ const Skill = () => {
       ],
     },
     {
-      name: 'Back End',
-      icon: <FaDatabase className="text-4xl text-lime-600 mb-2 mx-auto" />,
+      name: 'Back End Development',
+      icon: <FaDatabase className="text-5xl mb-3 mx-auto" />,
+      gradient: 'from-cyan-500 to-blue-500',
       items: [
         { tech: 'PHP', level: 'Advanced' },
-        { tech: 'Laravel', level: 'Intermediate' },
+        { tech: 'Node.js', level: 'Intermediate' },
         { tech: 'MySQL', level: 'Advanced' },
+        { tech: 'MongoDB', level: 'Intermediate' },
         { tech: 'REST APIs', level: 'Advanced' },
       ],
     },
     {
-      name: 'WordPress Development',
-      icon: <FaWordpress className="text-4xl text-lime-600 mb-2 mx-auto" />,
+      name: 'WordPress Ecosystem',
+      icon: <FaWordpress className="text-5xl mb-3 mx-auto" />,
+      gradient: 'from-pink-500 to-purple-500',
       items: [
-        { tech: 'Custom Themes', level: 'Advanced' },
-        { tech: 'Plugins', level: 'Intermediate' },
+        { tech: 'Custom Theme Dev', level: 'Advanced' },
+        { tech: 'Plugin Development', level: 'Intermediate' },
         { tech: 'WooCommerce', level: 'Intermediate' },
+        { tech: 'Elementor', level: 'Expert' },
+        { tech: 'Performance Optimization', level: 'Intermediate' },
       ],
     },
     {
-      name: 'Others',
-      icon: <FaTools className="text-4xl text-lime-600 mb-2 mx-auto" />,
+      name: 'Tools & Workflow',
+      icon: <FaTools className="text-5xl mb-3 mx-auto" />,
+      gradient: 'from-blue-500 to-cyan-500',
       items: [
-        { tech: 'Git & GitHub', level: 'Advanced' },
+        { tech: 'Git / GitHub', level: 'Advanced' },
+        { tech: 'VS Code', level: 'Expert' },
         { tech: 'Figma', level: 'Intermediate' },
+        { tech: 'Vercel / Netlify', level: 'Advanced' },
         { tech: 'Responsive Design', level: 'Expert' },
-        { tech: 'Deployment', level: 'Intermediate' },
       ],
     },
   ]
@@ -48,47 +56,79 @@ const Skill = () => {
   const getProgress = (level) => {
     switch (level) {
       case 'Beginner':
-        return 'w-1/3 bg-red-400'
+        return { width: 'w-1/3', gradient: 'from-red-500 to-orange-500' }
       case 'Intermediate':
-        return 'w-2/3 bg-yellow-400'
+        return { width: 'w-2/3', gradient: 'from-yellow-500 to-orange-500' }
       case 'Advanced':
-        return 'w-5/6 bg-lime-500'
+        return { width: 'w-5/6', gradient: 'from-cyan-500 to-blue-500' }
       case 'Expert':
-        return 'w-full bg-lime-700'
+        return { width: 'w-full', gradient: 'from-purple-500 to-pink-500' }
       default:
-        return 'w-1/4 bg-gray-400'
+        return { width: 'w-1/4', gradient: 'from-gray-500 to-gray-600' }
     }
   }
 
   return (
-    <section className="py-16 ">
+    <section className="pb-24 pt-10 bg-gray-800">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-10 text-lime-700">Skills</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 font-['Outfit'] flex items-center gap-3">
+          <div className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">
+            <FaCode className="text-3xl md:text-4xl" />
+          </div>
+          <span className="text-gradient bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+            Technical Skills
+          </span>
+          <div className="h-px flex-1 bg-gradient-to-r from-purple-500/50 to-transparent" />
+        </h2>
+        
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {skills.map((category, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-lg shadow-md group hover:shadow-xl transition-all duration-500 hover:h-[350px] h-[160px] overflow-hidden relative"
+              className="group relative p-6 rounded-2xl 
+                       bg-gradient-to-br from-gray-900/80 to-gray-800/80
+                       backdrop-blur-sm border border-purple-500/20
+                       hover:border-purple-500/50
+                       transition-all duration-500 
+                       hover:shadow-[0_20px_50px_rgba(139,92,246,0.2)]
+                       overflow-hidden
+                       h-auto min-h-[180px]"
             >
-              <div className="text-center">
-                {category.icon}
-                <h3 className="text-xl font-semibold text-lime-600">
+              {/* Decorative Background Icon */}
+              <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-all duration-500 group-hover:scale-110 group-hover:-rotate-12 pointer-events-none">
+                {React.cloneElement(category.icon, { className: "text-9xl" })}
+              </div>
+
+              {/* Icon and Title - Always Visible */}
+              <div className="text-center relative z-10">
+                <div className={`text-transparent bg-clip-text bg-gradient-to-r ${category.gradient}`}>
+                  {category.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-cyan-400 transition-all">
                   {category.name}
                 </h3>
               </div>
 
-              <ul className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 py-4 space-y-4">
-                {category.items.map((item, i) => (
-                  <li key={i}>
-                    <div className="flex justify-between text-sm font-medium text-gray-700 mb-1">
-                      <span>{item.tech}</span>
-                    </div>
-                    <div className="w-full bg-gray-200 h-2 rounded-full">
-                      <div className={`h-2 rounded-full ${getProgress(item.level)} transition-all duration-500`} />
-                    </div>
-                  </li>
-                ))}
+              {/* Skills List - Shown on Hover */}
+              <ul className="opacity-0 group-hover:opacity-100 max-h-0 group-hover:max-h-96 transition-all duration-500 pt-6 space-y-4 relative z-10 overflow-hidden">
+                {category.items.map((item, i) => {
+                  const { width, gradient } = getProgress(item.level)
+                  return (
+                    <li key={i}>
+                      <div className="flex justify-between text-sm font-medium text-gray-300 mb-2">
+                        <span>{item.tech}</span>
+                        <span className="text-gray-500 text-xs">{item.level}</span>
+                      </div>
+                      <div className="w-full bg-gray-700/50 h-2 rounded-full overflow-hidden">
+                        <div className={`h-2 rounded-full bg-gradient-to-r ${gradient} ${width} transition-all duration-700`} />
+                      </div>
+                    </li>
+                  )
+                })}
               </ul>
+
+              {/* Subtle Glow Effect */}
+              <div className={`absolute inset-0 bg-gradient-to-r ${category.gradient} opacity-0 group-hover:opacity-5 blur-xl transition-opacity duration-500`} />
             </div>
           ))}
         </div>

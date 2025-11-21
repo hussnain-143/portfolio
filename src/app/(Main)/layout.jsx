@@ -1,19 +1,28 @@
 import React from 'react'
-import Header from '@/components/Header'
+import Sidebar from '@/components/Sidebar'
 import Footer from '@/components/Footer'
 import Clock from '@/components/Clock'
 
-const Layout = ({ children }) => {
+export default function Layout({ children }) {
   return (
-    <div className="flex flex-col min-h-screen">
-        <Header/>
-      <main className="flex-grow">
-        {children}
-        <Clock/>
+    <div className="min-h-screen bg-[#0a0a0f] text-white flex">
+      {/* Fixed Sidebar */}
+      <Sidebar />
+
+      {/* Main Content Wrapper */}
+      <main className="flex-1 ml-20 relative flex flex-col min-h-screen">
+        {/* Clock Widget (Absolute positioned) */}
+        <div className="absolute top-6 right-6 z-40">
+          <Clock />
+        </div>
+
+        {/* Page Content */}
+        <div className="flex-1 p-6 md:p-10">
+          {children}
+        </div>
+
+        <Footer />
       </main>
-        <Footer/>
     </div>
   )
 }
-
-export default Layout

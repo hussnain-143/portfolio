@@ -25,16 +25,30 @@ const Clock = () => {
 
   return (
     <div
-      className="fixed bottom-50 right-3 sm:bottom-50 sm:right-4 
-                 flex items-center justify-center 
-                 w-28 h-28 sm:w-36 sm:h-36 lg:w-44 lg:h-44 
-                 rounded-full border-2 border-lime-400/50 
-                 bg-white/10 backdrop-blur-sm 
-                 shadow-xl shadow-lime-500/30"
+      className="fixed bottom-6 right-6 
+                 flex flex-col items-center justify-center 
+                 px-6 py-4
+                 rounded-2xl 
+                 bg-[#1a1a2e]/60 backdrop-blur-md
+                 border border-white/10
+                 shadow-2xl shadow-purple-500/10
+                 hover:shadow-purple-500/20
+                 hover:border-purple-500/30
+                 transition-all duration-500
+                 hover:-translate-y-1
+                 z-40
+                 group"
     >
-      <div className="text-lg sm:text-xl lg:text-2xl font-bold text-lime-700 tracking-wide drop-shadow-md text-center">
+      <div className="text-xs text-gray-500 mb-1 font-['Outfit'] uppercase tracking-wider">
+      </div>
+      <div className="text-2xl font-bold 
+                    text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400
+                    tracking-wide font-['Outfit'] tabular-nums">
         {time}
       </div>
+      
+      {/* Subtle Glow Effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover:opacity-5 blur-xl rounded-2xl transition-opacity duration-500 pointer-events-none" />
     </div>
   );
 };

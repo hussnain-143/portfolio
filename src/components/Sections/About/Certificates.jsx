@@ -1,63 +1,69 @@
 import React from 'react'
 import Image from 'next/image'
 
-const certificateData = [
-    {
-        title: 'Achievement',
-        institute: '1st Place – WordSprint Hackathon 6.0',
-        date: 'Dec 27–30, 2024',
-        image: '/certificates/hakathon.jpg',
-    },
-    {
-        title: 'Achievement',
-        institute: 'Awarded for entrepreneurial excellence',
-        date: 'June 2023',
-        image: '/certificates/Achievement.png',
-    },
-    {
-        title: 'Participation',
-        institute: 'Volunteered at open-source conference',
-        date: 'Dec 10, 2023',
-        image: '/certificates/PARTICIPATION.png',
-    },
-];
-
-
 const Certificates = () => {
-    return (
-        <section className="bg-lime-100 py-20">
-            <div className="container mx-auto px-6">
+  const certificates = [
+    {
+      title: "Hackathon Winner 2023",
+      issuer: "Tech Innovation Summit",
+      date: "2023",
+      image: "/certificates/hakathon.jpg" 
+    },
+    {
+      title: "Achievement Award",
+      issuer: "Best Performance",
+      date: "2023",
+      image: "/certificates/Achievement.png"
+    },
+    {
+      title: "Participation Certificate",
+      issuer: "Web Dev Bootcamp",
+      date: "2022",
+      image: "/certificates/PARTICIPATION.png"
+    }
+  ]
 
-                <h2 className="text-4xl font-bold mb-10 text-center text-lime-700">Certificates</h2>
+  return (
+    <div className="p-8 md:p-12">
+      <h2 className="text-3xl md:text-4xl font-bold mb-12 font-['Outfit'] flex items-center gap-3">
+        <span className="text-gradient bg-gradient-to-r from-purple-400 to-indigo-500 bg-clip-text text-transparent">
+          Certificates
+        </span>
+        <div className="h-px flex-1 bg-gradient-to-r from-purple-500/50 to-transparent" />
+      </h2>
 
-                {/* Certificate Grid */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {certificateData.map((cert, index) => (
-                        <div
-                            key={index}
-                            className="relative group overflow-hidden rounded-xl shadow-lg border border-gray-100 bg-white"
-                        >
-                            {/* Image */}
-                            <Image
-                                src={cert.image}
-                                alt={cert.title}
-                                width={400}
-                                height={250}
-                                className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
-                            />
-
-                            {/* Hover Overlay */}
-                            <div className="absolute inset-0 bg-black/60 text-white opacity-0 group-hover:opacity-100 transition duration-500 p-6 flex flex-col justify-end">
-                                <h3 className="text-lg font-semibold">{cert.title}</h3>
-                                <p className="text-sm">{cert.institute}</p>
-                                <p className="text-xs text-gray-300">{cert.date}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {certificates.map((cert, index) => (
+          <div key={index} className="group/cert relative bg-white/5 rounded-xl overflow-hidden border border-white/5 hover:border-purple-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/30 cursor-pointer">
+            <div className="aspect-video relative bg-gray-800 overflow-hidden">
+              <Image
+                src={cert.image}
+                alt={cert.title}
+                fill
+                className="object-cover group-hover/cert:scale-110 group-hover/cert:brightness-110 transition-all duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60 group-hover/cert:opacity-40 transition-opacity duration-500" />
             </div>
-        </section>
-    )
+            
+            <div className="p-4 relative z-10">
+              <h3 className="text-lg font-bold text-white group-hover/cert:text-purple-400 transition-colors line-clamp-1">
+                {cert.title}
+              </h3>
+              <div className="flex justify-between items-center mt-2 text-sm text-gray-400">
+                <span>{cert.issuer}</span>
+                <span className="font-mono bg-purple-900/30 px-2 py-0.5 rounded text-purple-300 text-xs">
+                  {cert.date}
+                </span>
+              </div>
+            </div>
+            
+            {/* Subtle Glow Effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover/cert:opacity-5 blur-xl transition-opacity duration-500 pointer-events-none" />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
 
 export default Certificates

@@ -1,59 +1,60 @@
 import React from 'react'
-const educationData = [
-    {
-    title: 'BS in Computer Science',
-    institute: 'Abbottabad University',
-    date: '2020 – 2024',
-  },
-  {
-    title: 'Intermediate in Pre-Medical Science',
-    institute: 'Post Graduate College No. 1, Abbottabad',
-    date: '2018 – 2020',
-  },
-]
+import { FiBook } from 'react-icons/fi'
 
 const Education = () => {
-    return (
-        <section className=" py-20">
-            <div className="container mx-auto px-6">
-                <h2 className="text-4xl mb-10 text-center font-bold text-lime-700">Education</h2>
-                <div className="relative">
-                    {/* Center Timeline Line */}
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-1 bg-lime-500"></div>
+  const education = [
+    {
+      degree: "BS in Computer Science",
+      school: "Abbottabad University",
+      period: "2020 - 2024",
+      description: "Focused on software engineering, algorithms, and data structures. Graduated with honors.",
+    },
+    {
+      degree: "Intermediate in Pre-Medical Science",
+      school: "Post Graduate College No. 1, Abbottabad",
+      period: "2018 - 2020",
+      description: "Completed intermediate studies with a focus on science and foundational knowledge.",
+    }
+  ]
 
-                    {/* Cards */}
-                    <div className="flex flex-col gap-12">
-                        {educationData.map((item, index) => {
-                            const isLeft = index % 2 === 0
-                            return (
-                                <div
-                                    key={index}
-                                    className={`relative md:w-1/2 px-4 ${isLeft ? 'md:ml-0 md:mr-auto text-left' : 'md:mr-0 md:ml-auto text-left'
-                                        }`}
-                                >
-                                    {/* Dot aligned to timeline */}
-                                    <div
-                                        className="absolute top-4 w-4 h-4 bg-white border-4 border-lime-500 rounded-full shadow"
-                                        style={{
-                                            left: isLeft ? '100%' : '-1rem',
-                                            transform: isLeft ? 'translateX(-50%)' : 'translateX(50%)',
-                                        }}
-                                    ></div>
+  return (
+    <div className="p-8 md:p-12">
+      <h2 className="text-3xl md:text-4xl font-bold mb-12 font-['Outfit'] flex items-center gap-3">
+        <span className="text-gradient bg-gradient-to-r from-pink-400 to-purple-500 bg-clip-text text-transparent">
+          Education
+        </span>
+        <div className="h-px flex-1 bg-gradient-to-r from-pink-500/50 to-transparent" />
+      </h2>
 
-                                    {/* Card */}
-                                    <div className="bg-lime-50 p-6 rounded-xl shadow hover:shadow-lg transition">
-                                        <h3 className="text-xl font-semibold text-lime-800">{item.title}</h3>
-                                        <p className="text-gray-700">{item.institute}</p>
-                                        <p className="text-sm text-gray-500">{item.date}</p>
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>
+      <div className="space-y-12 relative">
+        {/* Vertical Line */}
+        <div className="absolute left-0 top-2 bottom-2 w-px bg-gradient-to-b from-pink-500/50 via-purple-500/20 to-transparent" />
+
+        {education.map((edu, index) => (
+          <div key={index} className="relative pl-8 group/item">
+            {/* Timeline Dot */}
+            <div className="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-pink-500 shadow-[0_0_10px_rgba(236,72,153,0.5)] group-hover/item:scale-150 transition-transform duration-300" />
+
+            <div className="space-y-2">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                <h3 className="text-xl font-bold text-white group-hover/item:text-pink-400 transition-colors">
+                  {edu.degree}
+                </h3>
+                <span className="text-sm font-mono text-pink-400/80 bg-pink-900/20 px-2 py-1 rounded border border-pink-500/20">
+                  {edu.period}
+                </span>
+              </div>
+              
+              <p className="text-lg text-gray-400 font-medium">{edu.school}</p>
+              
+              <p className="text-gray-400 leading-relaxed max-w-2xl">
+                {edu.description}
+              </p>
             </div>
-        </section>
-    )
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
-
 export default Education

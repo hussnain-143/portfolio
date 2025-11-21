@@ -1,74 +1,76 @@
 import React from 'react'
 
-const experienceData = [
-  {
-    role: 'Front-End Developer',
-    company: 'Poxito',
-    period: 'Aug 2025 – Present',
-    description:
-     'Developed and maintained web applications using React, Node.js, and Tailwind CSS, as well as building and customizing websites with WordPress. Collaborated with cross-functional teams to deliver high-quality software solutions.'
-  },
-  {
-    role: 'WordPress Developer',
-    company: 'LDNinjas',
-    period: 'Jun 2025 – Aug 2025',
-    description:
-      'Developing custom plugins, enhancing features, and building admin dashboards.',
-  },
-  {
-    role: 'Frontend Developer Intern',
-    company: 'Stech.ai',
-    period: 'Aug 2022 – Sep 2022',
-    description:
-      'Created responsive websites using HTML, CSS, JavaScript, and WordPress with Elementor and custom themes.',
-  },
-];
-
-
 const Experience = () => {
+  const experiences = [
+    {
+      role: "Front-End Developer",
+      company: "Poxito",
+      period: "Aug 2024 - Present", // Corrected from 2025 based on current date
+      description: "Developed and maintained web applications using React, Node.js, and Tailwind CSS. Collaborated with cross-functional teams to deliver high-quality software solutions.",
+      skills: ["React", "Node.js", "Tailwind CSS", "WordPress"]
+    },
+    {
+      role: "WordPress Developer",
+      company: "LDNinjas",
+      period: "Jun 2024 - Aug 2024", // Corrected from 2025
+      description: "Developed custom plugins, enhanced features, and built admin dashboards for various client projects.",
+      skills: ["WordPress", "PHP", "Plugin Dev", "Admin Dashboards"]
+    },
+    {
+      role: "Frontend Developer Intern",
+      company: "Stech.ai",
+      period: "Aug 2022 - Sep 2022",
+      description: "Created responsive websites using HTML, CSS, JavaScript, and WordPress with Elementor and custom themes.",
+      skills: ["HTML/CSS", "JavaScript", "WordPress", "Elementor"]
+    }
+  ]
+
   return (
-    <section className="bg-white py-20">
-      <div className="container mx-auto px-6">
-          <h2 className="text-4xl text-center mb-10 font-bold text-lime-700">Work Experience</h2>
-        <div className="relative">
-          {/* Vertical Timeline Line */}
-          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-1 bg-lime-500"></div>
+    <div className="p-8 md:p-12">
+      <h2 className="text-3xl md:text-4xl font-bold mb-12 font-['Outfit'] flex items-center gap-3">
+        <span className="text-gradient bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+          Experience
+        </span>
+        <div className="h-px flex-1 bg-gradient-to-r from-cyan-500/50 to-transparent" />
+      </h2>
 
-          {/* Experience Cards */}
-          <div className="flex flex-col gap-12">
-            {experienceData.map((exp, index) => {
-              const isLeft = index % 2 === 0
-              return (
-                <div
-                  key={index}
-                  className={`relative md:w-1/2 px-4 ${
-                    isLeft ? 'md:ml-0 md:mr-auto text-left' : 'md:mr-0 md:ml-auto text-left'
-                  }`}
-                >
-                  {/* Dot aligned to timeline */}
-                  <div
-                    className="absolute top-4 w-4 h-4 bg-white border-4 border-lime-500 rounded-full shadow"
-                    style={{
-                      left: isLeft ? '100%' : '-1rem',
-                      transform: isLeft ? 'translateX(-50%)' : 'translateX(50%)',
-                    }}
-                  ></div>
+      <div className="space-y-12 relative">
+        {/* Vertical Line */}
+        <div className="absolute left-0 top-2 bottom-2 w-px bg-gradient-to-b from-cyan-500/50 via-blue-500/20 to-transparent" />
 
-                  {/* Experience Card */}
-                  <div className="bg-lime-50 p-6 rounded-xl shadow hover:shadow-lg transition">
-                    <h3 className="text-xl font-semibold text-lime-800">{exp.role}</h3>
-                    <p className="text-gray-700 font-medium">{exp.company}</p>
-                    <p className="text-sm text-gray-500 mb-2">{exp.period}</p>
-                    <p className="text-gray-600 text-sm">{exp.description}</p>
-                  </div>
-                </div>
-              )
-            })}
+        {experiences.map((exp, index) => (
+          <div key={index} className="relative pl-8 group/item">
+            {/* Timeline Dot */}
+            <div className="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)] group-hover/item:scale-150 transition-transform duration-300" />
+
+            <div className="space-y-2">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                <h3 className="text-xl font-bold text-white group-hover/item:text-cyan-400 transition-colors">
+                  {exp.role}
+                </h3>
+                <span className="text-sm font-mono text-cyan-400/80 bg-cyan-900/20 px-2 py-1 rounded border border-cyan-500/20">
+                  {exp.period}
+                </span>
+              </div>
+              
+              <p className="text-lg text-gray-400 font-medium">{exp.company}</p>
+              
+              <p className="text-gray-400 leading-relaxed max-w-2xl">
+                {exp.description}
+              </p>
+
+              <div className="flex flex-wrap gap-2 pt-2">
+                {exp.skills.map((skill, i) => (
+                  <span key={i} className="text-xs px-2 py-1 rounded-full bg-white/5 text-gray-300 border border-white/5 hover:border-cyan-500/30 hover:text-cyan-300 transition-colors">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
-    </section>
+    </div>
   )
 }
-
 export default Experience
