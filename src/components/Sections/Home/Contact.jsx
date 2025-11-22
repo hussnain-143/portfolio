@@ -33,9 +33,9 @@ const Contact = () => {
                                          text-white font-semibold rounded-full 
                                          transition-all duration-300
                                          hover:scale-105 hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]
-                                         cursor-pointer">
+                                         cursor-pointer group/btn">
                                 Contact Me
-                                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                 </svg>
                             </span>

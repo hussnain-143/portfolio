@@ -17,7 +17,7 @@ const Footer = () => {
           </div>
 
           {/* Middle: Quick Links */}
-          <div className="flex gap-6 text-sm">
+          <div className="flex flex-wrap justify-center gap-6 text-sm">
             <Link href="/" className="text-gray-400 hover:text-purple-400 transition-colors">
               Home
             </Link>
