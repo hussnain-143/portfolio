@@ -183,7 +183,7 @@ const Contact = () => {
               <button
                 type="submit"
                 disabled={state.submitting}
-                className="group w-full md:w-auto px-8 py-4 rounded-xl font-semibold
+                className="group/btn w-full md:w-auto px-8 py-4 rounded-xl font-semibold
                          bg-gradient-to-r from-purple-600 to-cyan-600
                          hover:from-purple-500 hover:to-cyan-500
                          text-white
@@ -195,7 +195,7 @@ const Contact = () => {
                          flex items-center justify-center gap-2"
               >
                 {state.submitting ? 'Sending...' : 'Send Message'}
-                <FaPaperPlane className="group-hover:translate-x-1 transition-transform duration-300" />
+                <FaPaperPlane className="group-hover/btn:translate-x-1 transition-transform duration-300" />
               </button>
             </form>
           </div>

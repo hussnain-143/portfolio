@@ -10,7 +10,7 @@ export default function Layout({ children }) {
       <Sidebar />
 
       {/* Main Content Wrapper */}
-      <main className="flex-1 ml-20 relative flex flex-col min-h-screen">
+      <main className="flex-1 lg:ml-20 ml-0 relative flex flex-col min-h-screen">
         {/* Clock Widget (Absolute positioned) */}
         <div className="absolute top-6 right-6 z-40">
           <Clock />

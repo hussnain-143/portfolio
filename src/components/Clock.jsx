@@ -27,7 +27,7 @@ const Clock = () => {
     <div
       className="fixed bottom-6 right-6 
                  flex flex-col items-center justify-center 
-                 px-6 py-4
+                 px-4 py-2 md:px-6 md:py-4
                  rounded-2xl 
                  bg-[#1a1a2e]/60 backdrop-blur-md
                  border border-white/10
@@ -41,7 +41,7 @@ const Clock = () => {
     >
       <div className="text-xs text-gray-500 mb-1 font-['Outfit'] uppercase tracking-wider">
       </div>
-      <div className="text-2xl font-bold 
+      <div className="text-lg md:text-2xl font-bold 
                     text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400
                     tracking-wide font-['Outfit'] tabular-nums">
         {time}
