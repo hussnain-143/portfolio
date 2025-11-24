@@ -1,0 +1,15 @@
+# robots.txt for Hussnain Ahmed's Portfolio
+
+User-agent: *
+Allow: /
+
+# Disallow admin or private areas if any
+# Disallow: /admin/
+# Disallow: /private/
+
+# Sitemap location
+Sitemap: https://h-a-portfolio.netlify.app/sitemap.xml
+
+# Crawl-delay (optional, adjust if needed)
+# Crawl-delay: 1
+
