@@ -1,4 +1,5 @@
 import "./globals.css";
+import CustomCursor from '@/components/CustomCursor'
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://h-a-portfolio.netlify.app';
 
@@ -170,7 +171,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" itemScope itemType="https://schema.org/WebSite">
-      <body cz-shortcut-listen="true" itemScope itemType="https://schema.org/Person">{children}</body>
+      <body cz-shortcut-listen="true" itemScope itemType="https://schema.org/Person">
+        <CustomCursor />
+        {children}
+      </body>
     </html>
   );
 }

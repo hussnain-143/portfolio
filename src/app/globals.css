@@ -140,3 +140,18 @@ html {
   background-color: var(--accent-purple);
   color: white;
 }
+
+/* Custom Cursor - Hide default cursor on desktop */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+  
+  a, button, input, textarea, select {
+    cursor: none !important;
+  }
+  
+  a:hover, button:hover {
+    cursor: none !important;
+  }
+}
