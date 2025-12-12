@@ -68,6 +68,33 @@
   100% { background-position: 0% 50%; }
 }
 
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+@keyframes scan {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.animate-glitch {
+  animation: glitch 0.3s ease-in-out;
+}
+
+.scan-lines {
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139, 92, 246, 0.1) 2px, rgba(139, 92, 246, 0.1) 4px);
+  animation: scan 8s linear infinite;
+}
+
 /* Utility Classes */
 .animate-float {
   animation: float 6s ease-in-out infinite;
@@ -112,4 +139,19 @@ html {
 ::selection {
   background-color: var(--accent-purple);
   color: white;
+}
+
+/* Custom Cursor - Hide default cursor on desktop */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+  
+  a, button, input, textarea, select {
+    cursor: none !important;
+  }
+  
+  a:hover, button:hover {
+    cursor: none !important;
+  }
 }

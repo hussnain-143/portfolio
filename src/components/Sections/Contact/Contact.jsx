@@ -22,7 +22,6 @@ const Contact = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
-      {/* Header */}
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-6xl font-bold font-['Outfit'] mb-6">
           <span className="text-gradient bg-gradient-to-r from-purple-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent animate-gradient">
@@ -35,7 +34,6 @@ const Contact = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-8">
-        {/* Contact Info Card */}
         <div className="group relative overflow-hidden rounded-3xl 
                      bg-[#1a1a2e]/60 backdrop-blur-md border border-white/5
                      hover:border-purple-500/50
@@ -44,7 +42,6 @@ const Contact = () => {
                      transition-all duration-500 
                      hover:-translate-y-2 p-8 md:p-12">
           
-          {/* Decorative Background Icon */}
           <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-all duration-500 group-hover:scale-110 group-hover:-rotate-12 pointer-events-none">
             <FaEnvelope className="w-54 h-54 text-white" />
           </div>
@@ -90,11 +87,9 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Subtle Glow Effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover:opacity-5 blur-2xl transition-opacity duration-500 pointer-events-none" />
         </div>
 
-        {/* Contact Form Card */}
         <div className="group relative overflow-hidden rounded-3xl 
                      bg-[#1a1a2e]/60 backdrop-blur-md border border-white/5
                      hover:border-purple-500/50
@@ -103,7 +98,6 @@ const Contact = () => {
                      transition-all duration-500 
                      hover:-translate-y-2 p-8 md:p-12">
           
-          {/* Decorative Background Icon */}
           <div className="absolute -left-10 -bottom-10 opacity-5 group-hover:opacity-10 transform transition-transform duration-500 ease-out group-hover:scale-110 group-hover:rotate-12 group-hover:translate-x-12 pointer-events-none">
             <FaPaperPlane className="w-54 h-54 text-white" />
           </div>
@@ -125,8 +119,8 @@ const Contact = () => {
               )}
 
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="relative group/input">
-                  <div className="absolute left-4 top-4 text-gray-500 group-focus-within/input:text-purple-400 transition-colors">
+                <div className="relative group/input z-20">
+                  <div className="absolute left-4 top-4 text-gray-500 group-focus-within/input:text-purple-400 transition-colors z-10 pointer-events-none">
                     <FaUser />
                   </div>
                   <input
@@ -134,7 +128,7 @@ const Contact = () => {
                     name="name"
                     required
                     placeholder="Your Name"
-                    className="w-full pl-12 pr-4 py-4 rounded-xl 
+                    className="w-full pl-12 pr-4 py-4 rounded-xl relative z-20
                              bg-white/5 border border-white/10
                              text-white placeholder-gray-500
                              focus:outline-none focus:border-purple-500/50 focus:bg-white/10
@@ -143,8 +137,8 @@ const Contact = () => {
                   <ValidationError prefix="Name" field="name" errors={state.errors} />
                 </div>
 
-                <div className="relative group/input">
-                  <div className="absolute left-4 top-4 text-gray-500 group-focus-within/input:text-cyan-400 transition-colors">
+                <div className="relative group/input z-20">
+                  <div className="absolute left-4 top-4 text-gray-500 group-focus-within/input:text-cyan-400 transition-colors z-10 pointer-events-none">
                     <FaEnvelope />
                   </div>
                   <input
@@ -152,7 +146,7 @@ const Contact = () => {
                     name="email"
                     required
                     placeholder="Email Address"
-                    className="w-full pl-12 pr-4 py-4 rounded-xl 
+                    className="w-full pl-12 pr-4 py-4 rounded-xl relative z-20
                              bg-white/5 border border-white/10
                              text-white placeholder-gray-500
                              focus:outline-none focus:border-cyan-500/50 focus:bg-white/10
@@ -162,8 +156,8 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="relative group/input">
-                <div className="absolute left-4 top-4 text-gray-500 group-focus-within/input:text-purple-400 transition-colors">
+              <div className="relative group/input z-20">
+                <div className="absolute left-4 top-4 text-gray-500 group-focus-within/input:text-purple-400 transition-colors z-10 pointer-events-none">
                   <FaCommentAlt />
                 </div>
                 <textarea
@@ -171,7 +165,7 @@ const Contact = () => {
                   rows="5"
                   required
                   placeholder="Your Message"
-                  className="w-full pl-12 pr-4 py-4 rounded-xl 
+                  className="w-full pl-12 pr-4 py-4 rounded-xl relative z-20
                            bg-white/5 border border-white/10
                            text-white placeholder-gray-500
                            focus:outline-none focus:border-purple-500/50 focus:bg-white/10
@@ -200,7 +194,6 @@ const Contact = () => {
             </form>
           </div>
 
-          {/* Subtle Glow Effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover:opacity-5 blur-2xl transition-opacity duration-500 pointer-events-none" />
         </div>
       </div>

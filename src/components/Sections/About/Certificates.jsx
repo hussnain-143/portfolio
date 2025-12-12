@@ -4,9 +4,9 @@ import Image from 'next/image'
 const Certificates = () => {
   const certificates = [
     {
-      title: "Hackathon Winner 2023",
+      title: "Hackathon Winner 2024",
       issuer: "Tech Innovation Summit",
-      date: "2023",
+      date: "2024",
       image: "/certificates/hakathon.jpg" 
     },
     {
@@ -17,8 +17,8 @@ const Certificates = () => {
     },
     {
       title: "Participation Certificate",
-      issuer: "Web Dev Bootcamp",
-      date: "2022",
+      issuer: "WordCamp Lahore Participation",
+      date: "2023",
       image: "/certificates/PARTICIPATION.png"
     }
   ]

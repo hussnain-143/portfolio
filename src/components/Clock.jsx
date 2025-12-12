@@ -47,7 +47,6 @@ const Clock = () => {
         {time}
       </div>
       
-      {/* Subtle Glow Effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover:opacity-5 blur-xl rounded-2xl transition-opacity duration-500 pointer-events-none" />
     </div>
   );
