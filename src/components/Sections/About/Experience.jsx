@@ -3,16 +3,16 @@ import React from 'react'
 const Experience = () => {
   const experiences = [
     {
-      role: "Front-End Developer",
+      role: "Full-Stacck Developer",
       company: "Poxito",
-      period: "Aug 2024 - Present", // Corrected from 2025 based on current date
-      description: "Developed and maintained web applications using React, Node.js, and Tailwind CSS. Collaborated with cross-functional teams to deliver high-quality software solutions.",
-      skills: ["React", "Node.js", "Tailwind CSS", "WordPress"]
+      period: "Aug 2025 - Present",
+      description: "Developed and maintained web applications using Next.js, React, Node.js, and Tailwind CSS. Collaborated with cross-functional teams to deliver high-quality software solutions.",
+      skills: ["React", "Node.js", "Next.js", "Tailwind CSS", "WordPress"]
     },
     {
       role: "WordPress Developer",
       company: "LDNinjas",
-      period: "Jun 2024 - Aug 2024", // Corrected from 2025
+      period: "Jun 2025 - Aug 2025",
       description: "Developed custom plugins, enhanced features, and built admin dashboards for various client projects.",
       skills: ["WordPress", "PHP", "Plugin Dev", "Admin Dashboards"]
     },
