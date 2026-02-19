@@ -1,5 +1,5 @@
 import "./globals.css";
-import CustomCursor from '@/components/CustomCursor'
+import Footer from '@/components/Footer'
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://h-a-portfolio.netlify.app';
 
@@ -19,7 +19,7 @@ export const metadata = {
     "Next.js Developer",
     "WordPress Developer",
     "PHP Developer",
-    
+
     // High-Intent Keywords
     "Hire Full Stack Developer",
     "Hire React Developer",
@@ -31,7 +31,7 @@ export const metadata = {
     "React Developer Pakistan",
     "WordPress Developer Pakistan",
     "Web Developer Islamabad",
-    
+
     // Technical Keywords
     "Frontend Developer",
     "Backend Developer",
@@ -43,7 +43,7 @@ export const metadata = {
     "Custom WordPress Development",
     "WordPress Theme Developer",
     "WordPress Plugin Developer",
-    
+
     // Technology Stack
     "React.js",
     "Next.js",
@@ -63,7 +63,7 @@ export const metadata = {
     "RESTful APIs",
     "GraphQL",
     "Firebase",
-    
+
     // Service Keywords
     "Web Development Services",
     "Custom Web Development",
@@ -75,7 +75,7 @@ export const metadata = {
     "Responsive Web Design",
     "Progressive Web Apps",
     "Single Page Applications",
-    
+
     // Portfolio & Experience
     "Developer Portfolio",
     "Web Developer Portfolio",
@@ -84,14 +84,14 @@ export const metadata = {
     "Professional Web Developer",
     "Experienced Web Developer",
     "Senior Web Developer",
-    
+
     // Location-Based
     "Web Developer in Pakistan",
     "Web Developer in Islamabad",
     "Full Stack Developer in Pakistan",
     "React Developer in Pakistan",
     "WordPress Developer in Pakistan",
-    
+
     // Industry Keywords
     "Software Developer",
     "Application Developer",
@@ -172,8 +172,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" itemScope itemType="https://schema.org/WebSite">
       <body cz-shortcut-listen="true" itemScope itemType="https://schema.org/Person">
-        <CustomCursor />
         {children}
+        <Footer />
       </body>
     </html>
   );

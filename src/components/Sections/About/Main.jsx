@@ -12,16 +12,17 @@ const Main = () => {
 
       <div className="text-gray-300 text-lg space-y-6 leading-relaxed relative z-10">
         <p>
-          Hello! I'm <span className="text-white font-semibold">Hussnain Ahmed</span>, a passionate <strong className="text-purple-400">Full-Stack Developer</strong> & <strong className="text-cyan-400">WordPress Developer</strong> who builds fast, responsive, and user-friendly applications. I specialize in modern frameworks like <strong className="text-white">React, Next.js, Node.js, PHP</strong>, and <strong className="text-white">WordPress</strong>.
+          Hello! I'm <span className="text-white font-semibold">Hussnain Ahmed</span>, a dedicated <strong className="text-purple-400">MERN & Full-Stack Developer</strong> with expertise in building fast, scalable, and user-centric web applications. I specialize in modern technologies like <strong className="text-white">React, Next.js, Node.js, and WordPress</strong>.
         </p>
 
         <p>
-          With a strong background in both <span className="text-purple-300">frontend and backend development</span>, I write clean, scalable code and design intuitive interfaces. My experience includes e-commerce, admin dashboards, and CMS-based platforms.
+          With a comprehensive background in <span className="text-purple-300">frontend and backend development</span>, I focus on writing high-quality, maintainable code and designing seamless user interfaces. My experience spans from custom e-commerce platforms to sophisticated admin dashboards.
         </p>
 
         <p>
-          I'm a lifelong learner who keeps up with industry trends. Whether solo or in a team, I approach each project with positivity and dedication to quality.
+          I am a continuous learner, constantly exploring new industry standards to deliver cutting-edge solutions. Whether working independently or as part of a team, I bring a proactive approach and a strong commitment to excellence.
         </p>
+
 
         <p>
           Outside of work, I enjoy tech meetups, mentoring juniors, and contributing to open source or personal projects.
