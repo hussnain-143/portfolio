@@ -60,7 +60,7 @@ const Hero = () => {
             </div>
 
             <p className="text-lg text-gray-400 max-w-2xl">
-              Passionate full-stack developer crafting beautiful, scalable web experiences with modern technologies.
+              Passionate MERN and Full-Stack developer crafting beautiful, scalable web experiences with modern technologies.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4 group/hero">
@@ -94,7 +94,7 @@ const Hero = () => {
           <div className="flex-1 flex justify-center">
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 animate-pulse" />
-              
+
               <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full 
                             border-4 border-purple-500/30 
                             shadow-[0_0_50px_rgba(139,92,246,0.3)]

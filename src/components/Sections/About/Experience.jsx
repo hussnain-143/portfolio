@@ -3,7 +3,7 @@ import React from 'react'
 const Experience = () => {
   const experiences = [
     {
-      role: "Full-Stacck Developer",
+      role: "Full-Stack Developer",
       company: "Poxito",
       period: "Aug 2025 - Present",
       description: "Developed and maintained web applications using Next.js, React, Node.js, and Tailwind CSS. Collaborated with cross-functional teams to deliver high-quality software solutions.",
@@ -52,9 +52,9 @@ const Experience = () => {
                   {exp.period}
                 </span>
               </div>
-              
+
               <p className="text-lg text-gray-400 font-medium">{exp.company}</p>
-              
+
               <p className="text-gray-400 leading-relaxed max-w-2xl">
                 {exp.description}
               </p>

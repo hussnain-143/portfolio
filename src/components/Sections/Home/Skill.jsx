@@ -47,7 +47,7 @@ const Skill = () => {
         { tech: 'Git / GitHub', level: 'Advanced' },
         { tech: 'VS Code', level: 'Expert' },
         { tech: 'Figma', level: 'Intermediate' },
-        { tech: 'Vercel / Netlify', level: 'Advanced' },
+        { tech: 'Vercel / Netlify / Render', level: 'Advanced' },
         { tech: 'Responsive Design', level: 'Expert' },
       ],
     },
@@ -80,7 +80,7 @@ const Skill = () => {
           </span>
           <div className="h-px flex-1 bg-gradient-to-r from-purple-500/50 to-transparent" />
         </h2>
-        
+
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {skills.map((category, index) => (
             <div
