@@ -173,7 +173,6 @@ export default function RootLayout({ children }) {
     <html lang="en" itemScope itemType="https://schema.org/WebSite">
       <body cz-shortcut-listen="true" itemScope itemType="https://schema.org/Person">
         {children}
-        <Footer />
       </body>
     </html>
   );
