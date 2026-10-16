@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { requireAdmin } from '@/lib/auth';
 import { connectToDatabase } from '@/lib/db';
 import { Project } from '@/models/Project';
@@ -80,6 +81,12 @@ export async function PUT(
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
+    try {
+      revalidatePath('/', 'layout');
+    } catch (e) {
+      console.warn('Revalidation notice:', e);
+    }
+
     return NextResponse.json({ success: true, project: JSON.parse(JSON.stringify(updated)) });
   } catch (err: unknown) {
     if (err instanceof Error && err.message === 'Unauthorized') {
@@ -107,6 +114,12 @@ export async function DELETE(
 
     if (!deleted) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    }
+
+    try {
+      revalidatePath('/', 'layout');
+    } catch (e) {
+      console.warn('Revalidation notice:', e);
     }
 
     return NextResponse.json({ success: true, message: 'Project deleted successfully' });

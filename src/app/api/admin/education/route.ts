@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { requireAdmin } from '@/lib/auth';
 import { connectToDatabase } from '@/lib/db';
 import { Education } from '@/models/Education';
@@ -34,6 +35,11 @@ export async function POST(req: NextRequest) {
 
     await connectToDatabase();
     const newEdu = await Education.create(parseResult.data);
+    try {
+      revalidatePath('/', 'layout');
+    } catch (e) {
+      console.warn('Revalidation notice:', e);
+    }
     return NextResponse.json({ success: true, education: JSON.parse(JSON.stringify(newEdu)) }, { status: 201 });
   } catch (err: unknown) {
     if (err instanceof Error && err.message === 'Unauthorized') {

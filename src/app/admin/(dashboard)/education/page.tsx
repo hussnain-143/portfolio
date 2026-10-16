@@ -380,14 +380,51 @@ export default function AdminEducationPage() {
 
               {formData.isCertificate && (
                 <div>
-                  <label className="block text-xs font-semibold text-[var(--admin-text-secondary)] mb-1 font-mono">Certificate Image Path</label>
-                  <input
-                    type="text"
-                    value={formData.certificateImage}
-                    onChange={(e) => setFormData({ ...formData, certificateImage: e.target.value })}
-                    placeholder="/certificates/hackathon.jpg"
-                    className="w-full px-3.5 py-2 rounded-xl bg-[var(--admin-elevated)] border border-[var(--admin-border)] text-xs text-[var(--admin-text-primary)] focus:outline-none focus:border-[var(--admin-accent)] font-mono"
-                  />
+                  <label className="block text-xs font-semibold text-[var(--admin-text-secondary)] mb-1 font-mono">
+                    Certificate Image (Path, URL, or File)
+                  </label>
+                  <div className="flex items-start gap-3">
+                    <div className="relative w-16 h-12 rounded-lg overflow-hidden border border-[var(--admin-accent)]/50 bg-[var(--admin-elevated)] shrink-0 shadow-sm flex items-center justify-center">
+                      {formData.certificateImage ? (
+                        <img
+                          src={formData.certificateImage}
+                          alt="Certificate Preview"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-[10px] text-[var(--admin-text-secondary)]">No Pic</span>
+                      )}
+                    </div>
+                    <div className="flex-1 space-y-1.5">
+                      <input
+                        type="text"
+                        value={formData.certificateImage}
+                        onChange={(e) => setFormData({ ...formData, certificateImage: e.target.value })}
+                        placeholder="/certificates/hackathon.jpg or https://..."
+                        className="w-full px-3.5 py-2 rounded-xl bg-[var(--admin-elevated)] border border-[var(--admin-border)] text-xs text-[var(--admin-text-primary)] focus:outline-none focus:border-[var(--admin-accent)] font-mono"
+                      />
+                      <label className="text-[10px] px-2.5 py-1 rounded-lg bg-[var(--admin-elevated)] hover:bg-[var(--admin-border)] text-[var(--admin-accent)] border border-[var(--admin-border)] cursor-pointer transition-colors inline-flex items-center gap-1">
+                        <span>Browse Local Image</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onloadend = () => {
+                                if (typeof reader.result === 'string') {
+                                  setFormData((prev) => ({ ...prev, certificateImage: reader.result as string }));
+                                }
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
                 </div>
               )}
 

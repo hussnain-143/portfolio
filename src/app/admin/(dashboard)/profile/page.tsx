@@ -186,6 +186,41 @@ export default function AdminProfilePage() {
             />
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-semibold text-[var(--admin-text-secondary)] mb-1">
+                Years of Experience
+              </label>
+              <input
+                type="number"
+                min={0}
+                max={50}
+                required
+                value={formData.yearsOfExperience}
+                onChange={(e) =>
+                  setFormData({ ...formData, yearsOfExperience: parseInt(e.target.value) || 0 })
+                }
+                className="w-full px-3.5 py-2 rounded-xl bg-[var(--admin-elevated)] border border-[var(--admin-border)] text-xs text-[var(--admin-text-primary)] focus:outline-none focus:border-[var(--admin-accent)] font-mono"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-[var(--admin-text-secondary)] mb-1">
+                Completed Projects Count
+              </label>
+              <input
+                type="number"
+                min={0}
+                required
+                value={formData.completedProjectsCount}
+                onChange={(e) =>
+                  setFormData({ ...formData, completedProjectsCount: parseInt(e.target.value) || 0 })
+                }
+                className="w-full px-3.5 py-2 rounded-xl bg-[var(--admin-elevated)] border border-[var(--admin-border)] text-xs text-[var(--admin-text-primary)] focus:outline-none focus:border-[var(--admin-accent)] font-mono"
+              />
+            </div>
+          </div>
+
           <div>
             <label className="block text-xs font-semibold text-[var(--admin-text-secondary)] mb-1">Short Bio</label>
             <textarea
@@ -301,14 +336,61 @@ export default function AdminProfilePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[var(--admin-text-secondary)] mb-1 font-mono">Avatar Image Path</label>
-              <input
-                type="text"
-                required
-                value={formData.avatarUrl}
-                onChange={(e) => setFormData({ ...formData, avatarUrl: e.target.value })}
-                className="w-full px-3.5 py-2 rounded-xl bg-[var(--admin-elevated)] border border-[var(--admin-border)] text-xs text-[var(--admin-text-primary)] focus:outline-none focus:border-[var(--admin-accent)] font-mono"
-              />
+              <label className="block text-xs font-semibold text-[var(--admin-text-secondary)] mb-1 font-mono">
+                Avatar Image (Path, URL, or File)
+              </label>
+              <div className="flex items-start gap-3">
+                <div className="relative w-14 h-18 rounded-t-xl rounded-b-md overflow-hidden border border-[var(--admin-accent)]/50 bg-[var(--admin-elevated)] shrink-0 shadow-sm flex items-center justify-center">
+                  {formData.avatarUrl ? (
+                    <img
+                      src={formData.avatarUrl}
+                      alt="Avatar Preview"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  ) : (
+                    <span className="text-[10px] text-[var(--admin-text-secondary)]">No Pic</span>
+                  )}
+                </div>
+                <div className="flex-1 space-y-2">
+                  <input
+                    type="text"
+                    required
+                    value={formData.avatarUrl}
+                    onChange={(e) => setFormData({ ...formData, avatarUrl: e.target.value })}
+                    placeholder="/profile/image.jpg or https://..."
+                    className="w-full px-3.5 py-2 rounded-xl bg-[var(--admin-elevated)] border border-[var(--admin-border)] text-xs text-[var(--admin-text-primary)] focus:outline-none focus:border-[var(--admin-accent)] font-mono"
+                  />
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, avatarUrl: '/profile/image.jpg' })}
+                      className="text-[10px] px-2.5 py-1 rounded-lg bg-[var(--admin-elevated)] hover:bg-[var(--admin-border)] text-[var(--admin-text-secondary)] hover:text-[var(--admin-text-primary)] border border-[var(--admin-border)] transition-colors"
+                    >
+                      Default
+                    </button>
+                    <label className="text-[10px] px-2.5 py-1 rounded-lg bg-[var(--admin-elevated)] hover:bg-[var(--admin-border)] text-[var(--admin-accent)] border border-[var(--admin-border)] cursor-pointer transition-colors inline-flex items-center gap-1">
+                      <span>Browse Local File</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onloadend = () => {
+                              if (typeof reader.result === 'string') {
+                                setFormData((prev) => ({ ...prev, avatarUrl: reader.result as string }));
+                              }
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div>

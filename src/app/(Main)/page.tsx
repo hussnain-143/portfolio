@@ -474,9 +474,9 @@ export default async function HomePage() {
             <div className="space-y-5">
               {experiences && experiences.length > 0 ? (
                 experiences.slice(0, 3).map((exp: any) => (
-                  <div key={exp._id || exp.position || exp.title} className="flex justify-between items-start gap-2">
+                  <div key={exp._id || exp.role || exp.title} className="flex justify-between items-start gap-2">
                     <div>
-                      <h4 className="text-xs font-bold text-[#F7F7F2]">{exp.position || exp.title}</h4>
+                      <h4 className="text-xs font-bold text-[#F7F7F2]">{exp.role || exp.position || exp.title}</h4>
                       <div className="text-[11px] text-[#A7ADB2]">{exp.company}</div>
                     </div>
                     <span className="text-[11px] font-mono-code text-[#737B82] shrink-0">{exp.period || exp.duration}</span>
