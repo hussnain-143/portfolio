@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   FolderGit2,
   Mail,
@@ -12,7 +13,11 @@ import {
   AlertCircle,
   ExternalLink,
   Clock,
+  MapPin,
+  Calendar,
   Sparkles,
+  User,
+  CheckCircle2,
 } from 'lucide-react';
 
 interface Stats {
@@ -45,12 +50,52 @@ interface ProjectItem {
   updatedAt: string;
 }
 
+interface ProfileData {
+  name?: string;
+  headline?: string;
+  title?: string;
+  location?: string;
+  avatarUrl?: string;
+  availabilityStatus?: string;
+  availabilityNote?: string;
+}
+
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [recentMessages, setRecentMessages] = useState<Message[]>([]);
   const [recentProjects, setRecentProjects] = useState<ProjectItem[]>([]);
+  const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Live time ticker in Asia/Karachi timezone
+  const [currentTime, setCurrentTime] = useState<string>('');
+  const [currentDate, setCurrentDate] = useState<string>('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const timeFormatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Karachi',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      });
+      const dateFormatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Karachi',
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+      });
+      setCurrentTime(timeFormatter.format(now));
+      setCurrentDate(dateFormatter.format(now));
+    };
+
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const fetchData = async () => {
     try {
@@ -61,6 +106,7 @@ export default function AdminDashboardPage() {
       setStats(data.stats);
       setRecentMessages(data.recentMessages || []);
       setRecentProjects(data.recentProjects || []);
+      if (data.profile) setProfile(data.profile);
     } catch (err: unknown) {
       if (err instanceof Error) setError(err.message);
     } finally {
@@ -96,39 +142,114 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="space-y-8">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--admin-border)] pb-6">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-[var(--admin-accent)]/10 text-[var(--admin-accent)] border border-[var(--admin-accent)]/20 font-semibold">
-              Live Production CMS
-            </span>
-          </div>
-          <h1 className="text-2xl md:text-3xl font-bold font-['Outfit'] tracking-tight text-[var(--admin-text-primary)]">
-            Portfolio Studio Overview
-          </h1>
-          <p className="text-xs sm:text-sm text-[var(--admin-text-secondary)] mt-1">
-            Verified database metrics, publication status, and incoming client inquiries.
-          </p>
-        </div>
+      {/* ============================================================ */}
+      {/* PROPER ADMIN HERO BANNER: Location, Time, Avatar & Profile */}
+      {/* ============================================================ */}
+      <div className="rounded-3xl bg-[var(--admin-surface)] border border-[var(--admin-border)] p-6 sm:p-8 relative overflow-hidden shadow-sm">
+        {/* Subtle decorative background glow */}
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[var(--admin-accent)]/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="flex items-center gap-3">
-          <Link
-            href="/admin/projects"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--admin-accent)] hover:opacity-90 text-[#0B0D0E] font-bold text-xs shadow-md transition-all cursor-pointer"
-          >
-            <Plus className="w-4 h-4 stroke-[2.5]" />
-            <span>Manage Projects</span>
-          </Link>
-          <a
-            href="/"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl border border-[var(--admin-border)] bg-[var(--admin-surface)] text-[var(--admin-text-secondary)] hover:text-[var(--admin-text-primary)] text-xs font-medium transition-all"
-          >
-            <span>Live Portfolio</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+          {/* Left: Avatar + Identity + Live Telemetry */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+            {/* Avatar with status ring */}
+            <div className="relative shrink-0">
+              <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-[var(--admin-accent)]/40 p-0.5 shadow-lg shadow-[var(--admin-accent)]/10 bg-[var(--admin-elevated)]">
+                <Image
+                  src={profile?.avatarUrl || '/profile/image.jpg'}
+                  alt={profile?.name || 'Hussnain Ahmed'}
+                  width={80}
+                  height={80}
+                  priority
+                  className="w-full h-full object-cover rounded-xl"
+                />
+              </div>
+              {/* Pulsing online/available badge */}
+              <span
+                className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[var(--admin-surface)] shadow-sm"
+                title="Status: Available for Work"
+              >
+                <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-75" />
+              </span>
+            </div>
+
+            {/* Profile Info & Metadata */}
+            <div className="space-y-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <h1 className="text-2xl sm:text-3xl font-bold font-['Outfit'] tracking-tight text-[var(--admin-text-primary)]">
+                  {profile?.name || 'Hussnain Ahmed'}
+                </h1>
+                <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[var(--admin-accent)]/15 text-[var(--admin-accent)] border border-[var(--admin-accent)]/25 font-bold">
+                  Studio Admin
+                </span>
+              </div>
+
+              <p className="text-xs sm:text-sm text-[var(--admin-text-secondary)] font-medium">
+                {profile?.headline || profile?.title || 'Full-Stack Developer & Next.js Specialist'}
+              </p>
+
+              {/* Location, Time & Availability Badges */}
+              <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                {/* Location */}
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[var(--admin-elevated)] border border-[var(--admin-border)] text-[var(--admin-text-secondary)] font-mono">
+                  <MapPin className="w-3.5 h-3.5 text-[var(--admin-accent)]" />
+                  <span>{profile?.location || 'Islamabad, Pakistan'}</span>
+                </div>
+
+                {/* Live Local Clock */}
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[var(--admin-elevated)] border border-[var(--admin-border)] text-[var(--admin-text-secondary)] font-mono">
+                  <Clock className="w-3.5 h-3.5 text-[var(--admin-orange)]" />
+                  <span className="tabular-nums font-semibold text-[var(--admin-text-primary)]">
+                    {currentTime || 'Loading...'}
+                  </span>
+                  <span className="text-[10px] text-[var(--admin-text-secondary)]">(PKT)</span>
+                </div>
+
+                {/* Date */}
+                {currentDate && (
+                  <div className="hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[var(--admin-elevated)] border border-[var(--admin-border)] text-[var(--admin-text-secondary)] font-mono">
+                    <Calendar className="w-3.5 h-3.5 text-[var(--admin-accent)]" />
+                    <span>{currentDate}</span>
+                  </div>
+                )}
+
+                {/* Availability Note */}
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 font-semibold font-mono text-[11px]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>{profile?.availabilityNote || 'Available for freelance & full-time'}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Quick Action Controls */}
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 shrink-0 pt-2 lg:pt-0">
+            <Link
+              href="/admin/projects"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--admin-accent)] hover:opacity-90 text-[#0B0D0E] font-bold text-xs shadow-md transition-all cursor-pointer"
+            >
+              <Plus className="w-4 h-4 stroke-[2.5]" />
+              <span>New Project</span>
+            </Link>
+
+            <Link
+              href="/admin/profile"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-[var(--admin-border)] bg-[var(--admin-elevated)] text-[var(--admin-text-primary)] hover:border-[var(--admin-accent)]/50 text-xs font-semibold transition-all"
+            >
+              <User className="w-3.5 h-3.5 text-[var(--admin-accent)]" />
+              <span>Edit Profile</span>
+            </Link>
+
+            <a
+              href="/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-[var(--admin-border)] bg-[var(--admin-elevated)] text-[var(--admin-text-secondary)] hover:text-[var(--admin-text-primary)] text-xs font-medium transition-all"
+            >
+              <span>Live Site</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
       </div>
 

@@ -33,10 +33,23 @@
   --glass-border: rgba(231, 223, 209, 0.8);
   --shadow-card: 0 4px 20px -2px rgba(25, 25, 25, 0.05);
 
-  --background: #FFFCF5;
-  --foreground: #191919;
+  --background: #0B0D0E;
+  --foreground: #F7F7F2;
 
-  /* SaaS Admin Specific Light Tokens */
+  /* SaaS Admin Tokens - Default (Dark Theme) */
+  --admin-bg: #0B0D0E;
+  --admin-sidebar: #101213;
+  --admin-surface: #141719;
+  --admin-elevated: #1C2022;
+  --admin-text-primary: #F4F4F5;
+  --admin-text-secondary: #A1A1AA;
+  --admin-accent: #FFB020;
+  --admin-orange: #FB923C;
+  --admin-border: #292D30;
+}
+
+.light, [data-theme="light"] {
+  /* SaaS Admin Tokens - Light Theme */
   --admin-bg: #F8F8F5;
   --admin-sidebar: #FFFFFF;
   --admin-surface: #FFFFFF;
@@ -48,7 +61,7 @@
   --admin-border: #E4E4E7;
 }
 
-.dark {
+.dark, [data-theme="dark"] {
   /* =========================================================================
      DARK THEME TOKENS (Deep Charcoal #0B0D0E & Warm Amber #FFB020)
      ========================================================================= */
@@ -88,7 +101,7 @@
   --admin-elevated: #1C2022;
   --admin-text-primary: #F4F4F5;
   --admin-text-secondary: #A1A1AA;
-  --admin-accent: #FBBF24;
+  --admin-accent: #FFB020;
   --admin-orange: #FB923C;
   --admin-border: #292D30;
 }

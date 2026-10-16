@@ -48,10 +48,11 @@ export default function AdminShell({ admin, children }: AdminShellProps) {
 
   // Load theme preference on mount
   useEffect(() => {
-    const savedTheme = localStorage.getItem('ha_admin_theme') as 'dark' | 'light' | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
+    const savedTheme = (localStorage.getItem('ha_admin_theme') as 'dark' | 'light' | null) || 'dark';
+    setTheme(savedTheme);
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+    document.documentElement.classList.toggle('light', savedTheme === 'light');
   }, []);
 
   // Fetch unread count for badge
@@ -91,6 +92,9 @@ export default function AdminShell({ admin, children }: AdminShellProps) {
     const next = theme === 'dark' ? 'light' : 'dark';
     setTheme(next);
     localStorage.setItem('ha_admin_theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    document.documentElement.classList.toggle('light', next === 'light');
   };
 
   const handleLogout = async () => {
@@ -159,7 +163,10 @@ export default function AdminShell({ admin, children }: AdminShellProps) {
   const bgHeader = isDark ? 'bg-[#101213]/90' : 'bg-[#FFFFFF]/90';
 
   return (
-    <div className={`min-h-screen ${bgApp} ${textPrimary} flex transition-colors duration-200 font-sans`}>
+    <div
+      data-theme={theme}
+      className={`min-h-screen ${theme} ${bgApp} ${textPrimary} flex transition-colors duration-200 font-sans`}
+    >
       {/* Mobile drawer backdrop */}
       {mobileOpen && (
         <div
