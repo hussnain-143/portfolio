@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="amberFavicon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD43B" />
+      <stop offset="50%" stop-color="#FFB020" />
+      <stop offset="100%" stop-color="#FF8A24" />
+    </linearGradient>
+  </defs>
+  <!-- Dark Rounded Container -->
+  <rect width="64" height="64" rx="14" fill="#0B0D0E" />
+  <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" stroke="#2B3033" stroke-width="1" />
+  
+  <!-- HA Monogram -->
+  <g transform="translate(10, 10) scale(0.68)">
+    <rect x="8" y="8" width="12" height="48" rx="2" fill="url(#amberFavicon)" />
+    <rect x="18" y="28" width="16" height="8" fill="url(#amberFavicon)" />
+    <rect x="30" y="8" width="12" height="48" rx="2" fill="url(#amberFavicon)" />
+    <path d="M40 8 H52 L62 56 H50 L47 40 H36 V32 H50 L45 13 Z" fill="url(#amberFavicon)" />
+  </g>
+</svg>

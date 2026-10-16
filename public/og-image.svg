@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B0D0E" />
+      <stop offset="100%" stop-color="#171A1C" />
+    </linearGradient>
+    <linearGradient id="amberGradOG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD43B" />
+      <stop offset="50%" stop-color="#FFB020" />
+      <stop offset="100%" stop-color="#FF8A24" />
+    </linearGradient>
+    <radialGradient id="amberGlowOG" cx="80%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#FFB020" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#0B0D0E" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)" />
+  <rect width="1200" height="630" fill="url(#amberGlowOG)" />
+  <rect x="20" y="20" width="1160" height="590" rx="24" stroke="#2B3033" stroke-width="2" />
+
+  <!-- Monogram Brand Icon -->
+  <g transform="translate(100, 110) scale(1.1)">
+    <rect x="16" y="16" width="16" height="76" rx="3" fill="url(#amberGradOG)" />
+    <rect x="30" y="46" width="24" height="14" fill="url(#amberGradOG)" />
+    <rect x="50" y="16" width="16" height="76" rx="3" fill="url(#amberGradOG)" />
+    <path d="M66 16 H82 L100 92 H84 L80 70 H62 V56 H83 L74 23 Z" fill="url(#amberGradOG)" />
+  </g>
+
+  <!-- Brand Typography -->
+  <text x="100" y="280" font-family="Outfit, Inter, system-ui, sans-serif" font-size="56" font-weight="800" fill="#F7F7F2" letter-spacing="-0.03em">
+    Hussnain Ahmed
+  </text>
+  <text x="100" y="340" font-family="Outfit, Inter, system-ui, sans-serif" font-size="32" font-weight="700" fill="#FFB020" letter-spacing="-0.01em">
+    Full-Stack Developer &amp; UI/UX Engineer
+  </text>
+  <text x="100" y="410" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="400" fill="#A7ADB2">
+    Next.js 16 • TypeScript • Node.js • Architecture &amp; Scalable Systems
+  </text>
+
+  <!-- Status Badge -->
+  <g transform="translate(100, 470)">
+    <rect width="320" height="50" rx="25" fill="#171A1C" stroke="#2B3033" stroke-width="1.5" />
+    <circle cx="28" cy="25" r="6" fill="#10B981" />
+    <text x="46" y="31" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#F7F7F2">
+      Available for Opportunities
+    </text>
+  </g>
+
+  <!-- Domain URL -->
+  <text x="1080" y="550" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="18" font-weight="500" fill="#737B82">
+    h-a-portfolio.netlify.app
+  </text>
+</svg>
