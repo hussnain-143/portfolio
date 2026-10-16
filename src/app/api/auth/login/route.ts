@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/db';
 import { AdminUser } from '@/models/AdminUser';
-import { verifyPassword, createSessionToken, setSessionCookie } from '@/lib/auth';
+import { verifyPassword, hashPassword, createSessionToken, setSessionCookie } from '@/lib/auth';
 import { loginSchema } from '@/lib/validations';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 export async function POST(req: NextRequest) {
   try {
     const ip = getClientIp(req.headers);
-    const rateCheck = checkRateLimit(`login:${ip}`, { limit: 5, windowMs: 15 * 60 * 1000 });
+    const rateCheck = checkRateLimit(`login:${ip}`, { limit: 10, windowMs: 15 * 60 * 1000 });
 
     if (!rateCheck.success) {
       return NextResponse.json(
@@ -22,15 +22,42 @@ export async function POST(req: NextRequest) {
 
     if (!parseResult.success) {
       return NextResponse.json(
-        { error: parseResult.error.issues[0]?.message || 'Invalid input' },
+        { error: parseResult.error.issues[0]?.message || 'Invalid email or password format' },
         { status: 400 }
       );
     }
 
     const { email, password } = parseResult.data;
 
+    // Check if database URI is configured in environment variables
+    if (!process.env.MONGODB_URI) {
+      console.error('Login error: MONGODB_URI environment variable is missing.');
+      return NextResponse.json(
+        {
+          error:
+            'Server configuration error: MONGODB_URI is missing. Please add MONGODB_URI in your Vercel Project Settings -> Environment Variables.',
+        },
+        { status: 500 }
+      );
+    }
+
     await connectToDatabase();
-    const admin = await AdminUser.findOne({ email });
+    let admin = await AdminUser.findOne({ email });
+
+    // Self-healing bootstrap: If this user matches ADMIN_EMAIL & ADMIN_PASSWORD env vars, auto-provision or sync
+    const envAdminEmail = (process.env.ADMIN_EMAIL || '').toLowerCase().trim();
+    const envAdminPassword = process.env.ADMIN_PASSWORD;
+
+    if (!admin && envAdminEmail && email === envAdminEmail && envAdminPassword && password === envAdminPassword) {
+      console.log(`Auto-provisioning initial superadmin account for ${email}...`);
+      const passwordHash = await hashPassword(password);
+      admin = await AdminUser.create({
+        email,
+        passwordHash,
+        name: 'Hussnain Ahmed',
+        role: 'superadmin',
+      });
+    }
 
     if (!admin) {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
@@ -67,6 +94,27 @@ export async function POST(req: NextRequest) {
     return response;
   } catch (err: unknown) {
     console.error('Login error:', err);
-    return NextResponse.json({ error: 'An unexpected server error occurred' }, { status: 500 });
+    const errString = err instanceof Error ? err.message : String(err);
+
+    // Provide actionable diagnostic messages for database connection failures on Vercel
+    if (
+      errString.includes('whitelist') ||
+      errString.includes('ServerSelectionError') ||
+      errString.includes('ETIMEDOUT') ||
+      errString.includes('querySrv')
+    ) {
+      return NextResponse.json(
+        {
+          error:
+            'Database connection error: Could not reach MongoDB Atlas. Please ensure Network Access in MongoDB Atlas allows 0.0.0.0/0 (Vercel serverless IPs) and your database user credentials are correct.',
+        },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      { error: `Login server error: ${errString || 'An unexpected error occurred'}` },
+      { status: 500 }
+    );
   }
 }
