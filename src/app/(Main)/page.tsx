@@ -6,6 +6,7 @@ import {
   getPublishedProjects,
   getSkillsData,
   getExperienceData,
+  getEducationData,
 } from '@/lib/data';
 import {
   ArrowRight,
@@ -33,24 +34,51 @@ export const metadata = constructMetadata({
 });
 
 export default async function HomePage() {
-  const [profile, projects, skills, experiences] = await Promise.all([
+  const [profile, projects, skills, experiences, education] = await Promise.all([
     getProfileData(),
     getPublishedProjects(),
     getSkillsData(),
     getExperienceData(),
+    getEducationData(),
   ]);
 
   // Featured projects from database or curated list
   const featuredProjects = projects.slice(0, 3);
 
+  // Dynamic profile fields
+  const fullName = profile.name || 'Hussnain Ahmed';
+  const nameParts = fullName.trim().split(/\s+/);
+  const firstName = nameParts[0] || 'Hussnain';
+  const lastName = nameParts.slice(1).join(' ');
+
+  const headline = profile.headline || profile.title || 'Full-Stack Developer';
+  const bio =
+    profile.shortBio ||
+    'I build modern, scalable, and user-focused web applications using Next.js, TypeScript, and Node.js. I love turning ideas into real products with clean code and great design.';
+  const avatarSrc = profile.avatarUrl || '/profile/image.jpg';
+  const locationText = profile.location || 'Islamabad, Pakistan';
+  const annotationText = profile.availabilityNote || 'Always building';
+
+  // Hero stack badges (top 5 skills from database, with fallback)
+  const heroSkills =
+    skills && skills.length > 0
+      ? skills.slice(0, 5)
+      : [
+          { name: 'Next.js' },
+          { name: 'TypeScript' },
+          { name: 'React' },
+          { name: 'Node.js' },
+          { name: 'MongoDB' },
+        ];
+
   const personJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: profile.name || 'Hussnain Ahmed',
+    name: fullName,
     url: SITE_URL,
-    image: `${SITE_URL}${profile.avatarUrl || '/profile/image.jpg'}`,
-    jobTitle: profile.title || 'Full-Stack Developer',
-    description: profile.shortBio,
+    image: `${SITE_URL}${avatarSrc}`,
+    jobTitle: profile.title || headline,
+    description: bio,
     sameAs: [profile.githubUrl, profile.linkedinUrl].filter(Boolean),
     knowsAbout: skills.map((s: any) => s.name),
   };
@@ -58,12 +86,12 @@ export default async function HomePage() {
   const websiteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Hussnain Ahmed Portfolio',
+    name: `${fullName} Portfolio`,
     url: SITE_URL,
-    description: profile.shortBio,
+    description: bio,
     author: {
       '@type': 'Person',
-      name: profile.name || 'Hussnain Ahmed',
+      name: fullName,
     },
   };
 
@@ -73,7 +101,7 @@ export default async function HomePage() {
       <JsonLd data={websiteJsonLd} />
 
       {/* =========================================================================
-          1. HERO SECTION — Asymmetric Editorial Layout (Matching Reference)
+          1. HERO SECTION — Asymmetric Editorial Layout (Completely Editable via Admin)
           ========================================================================= */}
       <section className="pt-6 md:pt-14 relative">
         {/* Far Right Vertical Indicators */}
@@ -87,27 +115,46 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column (Editorial Typography & Bio) */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            {/* Tagline */}
-            <div className="inline-flex items-center gap-2 text-xs font-mono-code text-[#A7ADB2] tracking-wider">
-              <span className="text-[#FFB020] font-bold">—</span>
-              <span>Hello, I'm</span>
+            {/* Tagline & Availability Pill */}
+            <div className="inline-flex flex-wrap items-center gap-3 text-xs font-mono-code tracking-wider">
+              <div className="inline-flex items-center gap-2 text-[#A7ADB2]">
+                <span className="text-[#FFB020] font-bold">—</span>
+                <span>Hello, I'm</span>
+              </div>
+              {profile.availabilityStatus && (
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#171A1C] border border-[#2B3033] text-[11px] text-[#A7ADB2]">
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full ${
+                      profile.availabilityStatus === 'available'
+                        ? 'bg-emerald-400 animate-pulse'
+                        : profile.availabilityStatus === 'busy'
+                        ? 'bg-amber-400'
+                        : 'bg-blue-400'
+                    }`}
+                  />
+                  <span className="capitalize">
+                    {profile.availabilityStatus === 'available'
+                      ? 'Available for work'
+                      : profile.availabilityStatus}
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Main Headline */}
             <div className="space-y-1">
               <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#F7F7F2] font-['Outfit']">
-                Hussnain <span className="text-[#FFD43B]">Ahmed</span>
+                {firstName}{' '}
+                {lastName ? <span className="text-[#FFD43B]">{lastName}</span> : null}
               </h1>
               <h2 className="text-xl sm:text-2xl font-bold text-[#F7F7F2] font-['Outfit'] tracking-tight pt-1">
-                Full-Stack Developer
+                {headline}
               </h2>
             </div>
 
             {/* Bio Description */}
             <p className="text-[#A7ADB2] text-sm sm:text-base leading-relaxed max-w-xl font-normal">
-              I build modern, scalable, and user-focused web applications using Next.js,
-              TypeScript, and Node.js. I love turning ideas into real products with clean code
-              and great design.
+              {bio}
             </p>
 
             {/* CTAs */}
@@ -128,36 +175,25 @@ export default async function HomePage() {
               </Link>
             </div>
 
-            {/* Compact Tech Stack Badges Row */}
+            {/* Compact Tech Stack Badges Row (Dynamic from Admin Skills) */}
             <div className="flex flex-wrap items-center gap-2.5 pt-6 border-t border-[#2B3033]/60">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#171A1C] border border-[#2B3033] text-xs text-[#F7F7F2]">
-                <span className="w-4 h-4 rounded-full bg-white text-black font-bold text-[9px] flex items-center justify-center">N</span>
-                <span>Next.js</span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#171A1C] border border-[#2B3033] text-xs text-[#F7F7F2]">
-                <span className="w-4 h-4 rounded bg-[#3178C6] text-white font-bold text-[9px] flex items-center justify-center">TS</span>
-                <span>TypeScript</span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#171A1C] border border-[#2B3033] text-xs text-[#F7F7F2]">
-                <span className="text-[#61DAFB] text-xs font-bold">⚛</span>
-                <span>React</span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#171A1C] border border-[#2B3033] text-xs text-[#F7F7F2]">
-                <span className="text-[#339933] text-xs font-bold">⬢</span>
-                <span>Node.js</span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#171A1C] border border-[#2B3033] text-xs text-[#F7F7F2]">
-                <span className="text-[#47A248] text-xs font-bold">🍃</span>
-                <span>MongoDB</span>
-              </div>
+              {heroSkills.map((s: any) => (
+                <div
+                  key={s._id || s.name}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#171A1C] border border-[#2B3033] text-xs text-[#F7F7F2]"
+                >
+                  <TechIcon name={s.name} className="w-4 h-4 shrink-0" size={16} />
+                  <span>{s.name}</span>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Right Column (Portrait in Amber Arch + Script Note + Info Badges) */}
           <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
-            {/* Script Annotation Note: "Always building ↗" */}
+            {/* Script Annotation Note */}
             <div className="absolute -top-6 left-6 md:left-12 z-20 text-[#FFD43B] font-['Outfit'] italic font-medium text-sm flex items-center gap-1 drop-shadow-md">
-              <span>Always building</span>
+              <span>{annotationText}</span>
               <span className="text-base">↗</span>
             </div>
 
@@ -167,10 +203,10 @@ export default async function HomePage() {
                 {/* Internal Arch Warm Glow */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0B0D0E] via-transparent to-[#FFB020]/40 z-10" />
 
-                {/* Profile Portrait */}
+                {/* Profile Portrait (Dynamic from Admin Profile) */}
                 <Image
-                  src="/profile/image.jpg"
-                  alt="Hussnain Ahmed - Full-Stack Developer"
+                  src={avatarSrc}
+                  alt={`${fullName} - ${headline}`}
                   width={360}
                   height={460}
                   priority
@@ -181,14 +217,14 @@ export default async function HomePage() {
 
             {/* Floating Info Cards (Stacked Right/Bottom) */}
             <div className="w-full max-w-xs flex flex-col gap-2.5 mt-6 sm:mt-0 sm:absolute sm:-right-6 sm:bottom-6 z-20">
-              {/* Card 1: Location */}
+              {/* Card 1: Location (Dynamic from Admin Profile) */}
               <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-[#171A1C]/90 backdrop-blur-xl border border-[#2B3033] shadow-xl shadow-black/50">
                 <div className="w-8 h-8 rounded-full bg-[#FFB020]/15 text-[#FFB020] flex items-center justify-center shrink-0">
                   <MapPin className="w-4 h-4" />
                 </div>
                 <div>
                   <div className="text-[10px] text-[#737B82] uppercase tracking-wider font-mono-code">Based in</div>
-                  <div className="text-xs font-bold text-[#F7F7F2]">Karachi, Pakistan</div>
+                  <div className="text-xs font-bold text-[#F7F7F2]">{locationText}</div>
                 </div>
               </div>
 
@@ -396,20 +432,23 @@ export default async function HomePage() {
 
             {/* Tech Badges Grid */}
             <div className="grid grid-cols-2 gap-2.5 pt-2">
-              {[
-                'Next.js',
-                'TypeScript',
-                'React',
-                'Node.js',
-                'MongoDB',
-                'Tailwind CSS',
-                'Git',
-                'Docker',
-                'PostgreSQL',
-                'AWS',
-                'WordPress',
-                'Figma',
-              ].map((name) => (
+              {(skills && skills.length > 0
+                ? skills.slice(0, 12).map((s: any) => s.name)
+                : [
+                    'Next.js',
+                    'TypeScript',
+                    'React',
+                    'Node.js',
+                    'MongoDB',
+                    'Tailwind CSS',
+                    'Git',
+                    'Docker',
+                    'PostgreSQL',
+                    'AWS',
+                    'WordPress',
+                    'Figma',
+                  ]
+              ).map((name: string) => (
                 <div
                   key={name}
                   className="group flex items-center gap-2.5 px-3 py-2 rounded-xl bg-[#171A1C] border border-[#2B3033] text-xs text-[#F7F7F2] hover:border-[#FFB020]/40 transition-colors"
@@ -433,29 +472,34 @@ export default async function HomePage() {
             </div>
 
             <div className="space-y-5">
-              <div className="flex justify-between items-start gap-2">
-                <div>
-                  <h4 className="text-xs font-bold text-[#F7F7F2]">Full-Stack Developer</h4>
-                  <div className="text-[11px] text-[#A7ADB2]">Freelance / Remote</div>
-                </div>
-                <span className="text-[11px] font-mono-code text-[#737B82]">2022 – Present</span>
-              </div>
-
-              <div className="flex justify-between items-start gap-2">
-                <div>
-                  <h4 className="text-xs font-bold text-[#F7F7F2]">Frontend Developer</h4>
-                  <div className="text-[11px] text-[#A7ADB2]">Local Projects & Client Work</div>
-                </div>
-                <span className="text-[11px] font-mono-code text-[#737B82]">2021 – 2022</span>
-              </div>
-
-              <div className="flex justify-between items-start gap-2">
-                <div>
-                  <h4 className="text-xs font-bold text-[#F7F7F2]">Junior Web Developer</h4>
-                  <div className="text-[11px] text-[#A7ADB2]">Internship & Software Engineering</div>
-                </div>
-                <span className="text-[11px] font-mono-code text-[#737B82]">2020 – 2021</span>
-              </div>
+              {experiences && experiences.length > 0 ? (
+                experiences.slice(0, 3).map((exp: any) => (
+                  <div key={exp._id || exp.position || exp.title} className="flex justify-between items-start gap-2">
+                    <div>
+                      <h4 className="text-xs font-bold text-[#F7F7F2]">{exp.position || exp.title}</h4>
+                      <div className="text-[11px] text-[#A7ADB2]">{exp.company}</div>
+                    </div>
+                    <span className="text-[11px] font-mono-code text-[#737B82] shrink-0">{exp.period || exp.duration}</span>
+                  </div>
+                ))
+              ) : (
+                <>
+                  <div className="flex justify-between items-start gap-2">
+                    <div>
+                      <h4 className="text-xs font-bold text-[#F7F7F2]">Full-Stack Developer</h4>
+                      <div className="text-[11px] text-[#A7ADB2]">Freelance / Remote</div>
+                    </div>
+                    <span className="text-[11px] font-mono-code text-[#737B82]">2022 – Present</span>
+                  </div>
+                  <div className="flex justify-between items-start gap-2">
+                    <div>
+                      <h4 className="text-xs font-bold text-[#F7F7F2]">Frontend Developer</h4>
+                      <div className="text-[11px] text-[#A7ADB2]">Local Projects & Client Work</div>
+                    </div>
+                    <span className="text-[11px] font-mono-code text-[#737B82]">2021 – 2022</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
@@ -469,21 +513,27 @@ export default async function HomePage() {
             </div>
 
             <div className="space-y-5">
-              <div className="space-y-1">
-                <div className="flex justify-between items-start gap-2">
-                  <h4 className="text-xs font-bold text-[#F7F7F2]">BS Computer Science</h4>
-                  <span className="text-[11px] font-mono-code text-[#737B82]">2018 – 2022</span>
-                </div>
-                <div className="text-[11px] text-[#A7ADB2]">University of Karachi / Gujrat</div>
-              </div>
-
-              <div className="space-y-1">
-                <div className="flex justify-between items-start gap-2">
-                  <h4 className="text-xs font-bold text-[#F7F7F2]">Intermediate (Pre-Engineering)</h4>
-                  <span className="text-[11px] font-mono-code text-[#737B82]">2016 – 2018</span>
-                </div>
-                <div className="text-[11px] text-[#A7ADB2]">Govt. College</div>
-              </div>
+              {education && education.length > 0 ? (
+                education.slice(0, 3).map((edu: any) => (
+                  <div key={edu._id || edu.degree} className="space-y-1">
+                    <div className="flex justify-between items-start gap-2">
+                      <h4 className="text-xs font-bold text-[#F7F7F2]">{edu.degree}</h4>
+                      <span className="text-[11px] font-mono-code text-[#737B82] shrink-0">{edu.period || edu.year}</span>
+                    </div>
+                    <div className="text-[11px] text-[#A7ADB2]">{edu.institution || edu.school || edu.issuer}</div>
+                  </div>
+                ))
+              ) : (
+                <>
+                  <div className="space-y-1">
+                    <div className="flex justify-between items-start gap-2">
+                      <h4 className="text-xs font-bold text-[#F7F7F2]">BS Computer Science</h4>
+                      <span className="text-[11px] font-mono-code text-[#737B82]">2020 – 2024</span>
+                    </div>
+                    <div className="text-[11px] text-[#A7ADB2]">Abbottabad University</div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
