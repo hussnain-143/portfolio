@@ -35,9 +35,9 @@ This guide walks you through deploying the portfolio and admin CMS to Vercel wit
    - Choose **Drivers** -> Node.js.
    - Copy the connection string format:
      ```
-     mongodb+srv://portfolio_admin:<password>@cluster0.xxxxx.mongodb.net/portfolio?retryWrites=true&w=majority
+     mongodb+srv://<db_username>:<db_password>@<cluster_name>.example.mongodb.net/portfolio?retryWrites=true&w=majority
      ```
-   - Replace `<password>` with your database password and ensure `/portfolio` is the database name before query params.
+   - Replace `<db_username>` and `<db_password>` with your database user credentials.
 
 ---
 
@@ -51,10 +51,10 @@ Before deploying or right after connecting, run the automated CLI utilities loca
    ```
 2. Update `.env.local` with your MongoDB URI:
    ```env
-   MONGODB_URI="mongodb+srv://portfolio_admin:yourpassword@cluster0.xxxxx.mongodb.net/portfolio?retryWrites=true&w=majority"
-   ADMIN_JWT_SECRET="generate_a_random_32_character_string_here"
-   ADMIN_EMAIL="admin@hussnain.dev"
-   ADMIN_PASSWORD="YourStrongAdminPassword123!"
+   MONGODB_URI="mongodb+srv://<db_username>:<db_password>@<cluster_name>.example.mongodb.net/portfolio?retryWrites=true&w=majority"
+   ADMIN_JWT_SECRET="<generate_a_random_32_character_string_here>"
+   ADMIN_EMAIL="<your_admin_email@example.com>"
+   ADMIN_PASSWORD="<choose_a_strong_password_here>"
    NEXT_PUBLIC_SITE_URL="https://h-a-portfolio.netlify.app"
    ```
 3. Run the database seed script:

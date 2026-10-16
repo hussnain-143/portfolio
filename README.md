@@ -118,10 +118,10 @@ cp .env.example .env.local
 
 Example `.env.local`:
 ```env
-MONGODB_URI="mongodb+srv://<user>:<password>@cluster0.xxxxx.mongodb.net/portfolio?retryWrites=true&w=majority"
-ADMIN_JWT_SECRET="generate_a_random_32_character_string_here"
-ADMIN_EMAIL="admin@hussnain.dev"
-ADMIN_PASSWORD="YourStrongAdminPassword123!"
+MONGODB_URI="mongodb+srv://<db_username>:<db_password>@<cluster_name>.example.mongodb.net/portfolio?retryWrites=true&w=majority"
+ADMIN_JWT_SECRET="<generate_a_random_32_character_string_here>"
+ADMIN_EMAIL="<your_admin_email@example.com>"
+ADMIN_PASSWORD="<choose_a_strong_password_here>"
 NEXT_PUBLIC_SITE_URL="http://localhost:3000"
 ```
 
