@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD43B" />
+      <stop offset="50%" stop-color="#FFB020" />
+      <stop offset="100%" stop-color="#FF8A24" />
+    </linearGradient>
+  </defs>
+  <!-- Stylized Bold HA Monogram -->
+  <!-- H: Left upright stem -->
+  <rect x="16" y="16" width="14" height="68" rx="2" fill="url(#amberGrad)" />
+  <!-- H: Crossbar -->
+  <rect x="28" y="44" width="22" height="12" fill="url(#amberGrad)" />
+  <!-- H & A shared central pillar -->
+  <rect x="46" y="16" width="14" height="68" rx="2" fill="url(#amberGrad)" />
+  <!-- A: Dynamic diagonal right arm -->
+  <path d="M60 16 H74 L90 84 H76 L72 64 H56 V52 H75 L67 22 Z" fill="url(#amberGrad)" />
+  <!-- A: Lower right footing -->
+  <path d="M72 64 L77 84 H63 L60 64 Z" fill="url(#amberGrad)" />
+</svg>
