@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { requireAdmin } from '@/lib/auth';
 import { connectToDatabase } from '@/lib/db';
 import { Profile } from '@/models/Profile';
@@ -34,10 +35,16 @@ export async function PUT(req: NextRequest) {
 
     await connectToDatabase();
     const updated = await Profile.findOneAndUpdate(
-      {},
-      { $set: parseResult.data },
-      { new: true, upsert: true, runValidators: true }
-    ).lean();
+       {},
+       { $set: parseResult.data },
+       { new: true, upsert: true, runValidators: true }
+     ).lean();
+
+    try {
+      revalidatePath('/', 'layout');
+    } catch (e) {
+      console.warn('Revalidation notice:', e);
+    }
 
     return NextResponse.json({ success: true, profile: JSON.parse(JSON.stringify(updated)) });
   } catch (err: unknown) {

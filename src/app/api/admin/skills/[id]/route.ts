@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { requireAdmin } from '@/lib/auth';
 import { connectToDatabase } from '@/lib/db';
 import { Skill } from '@/models/Skill';
@@ -38,6 +39,12 @@ export async function PUT(
       return NextResponse.json({ error: 'Skill not found' }, { status: 404 });
     }
 
+    try {
+      revalidatePath('/', 'layout');
+    } catch (e) {
+      console.warn('Revalidation notice:', e);
+    }
+
     return NextResponse.json({ success: true, skill: JSON.parse(JSON.stringify(updated)) });
   } catch (err: unknown) {
     if (err instanceof Error && err.message === 'Unauthorized') {
@@ -64,6 +71,12 @@ export async function DELETE(
 
     if (!deleted) {
       return NextResponse.json({ error: 'Skill not found' }, { status: 404 });
+    }
+
+    try {
+      revalidatePath('/', 'layout');
+    } catch (e) {
+      console.warn('Revalidation notice:', e);
     }
 
     return NextResponse.json({ success: true, message: 'Skill deleted' });

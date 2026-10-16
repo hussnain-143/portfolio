@@ -10,7 +10,15 @@ import {
   X,
 } from 'lucide-react';
 
-export default function Navbar() {
+interface NavbarProps {
+  brandName?: string;
+  resumeUrl?: string;
+}
+
+export default function Navbar({
+  brandName = 'Hussnain Ahmed',
+  resumeUrl = '/cv/HUSSNAIN-AHMED-CV.pdf',
+}: NavbarProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -51,12 +59,12 @@ export default function Navbar() {
           <Link
             href="/"
             className="flex items-center gap-3 group"
-            aria-label="Hussnain Ahmed - Home"
+            aria-label={`${brandName} - Home`}
           >
             <div className="relative w-8 h-8 rounded-lg overflow-hidden group-hover:scale-105 transition-transform duration-200">
               <Image
                 src="/logo-symbol.svg"
-                alt="Hussnain Ahmed Monogram"
+                alt={`${brandName} Monogram`}
                 width={32}
                 height={32}
                 priority
@@ -65,7 +73,7 @@ export default function Navbar() {
             </div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-base tracking-tight text-[#F7F7F2] font-['Outfit']">
-                Hussnain Ahmed
+                {brandName}
               </span>
             </div>
           </Link>
@@ -103,7 +111,7 @@ export default function Navbar() {
           {/* Right Action: Standout Resume Button & Mobile Toggle */}
           <div className="flex items-center gap-4">
             <a
-              href="/cv/HUSSNAIN-AHMED-CV.pdf"
+              href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
               download
@@ -156,7 +164,7 @@ export default function Navbar() {
 
             <div className="pt-6 mt-4 border-t border-[#2B3033] space-y-3">
               <a
-                href="/cv/HUSSNAIN-AHMED-CV.pdf"
+                href={resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 download

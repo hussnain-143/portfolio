@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { requireAdmin } from '@/lib/auth';
 import { connectToDatabase } from '@/lib/db';
 import { SiteSettings } from '@/models/SiteSettings';
@@ -38,6 +39,12 @@ export async function PUT(req: NextRequest) {
       { $set: parseResult.data },
       { new: true, upsert: true, runValidators: true }
     ).lean();
+
+    try {
+      revalidatePath('/', 'layout');
+    } catch (e) {
+      console.warn('Revalidation notice:', e);
+    }
 
     return NextResponse.json({ success: true, settings: JSON.parse(JSON.stringify(updated)) });
   } catch (err: unknown) {
