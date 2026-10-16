@@ -285,7 +285,7 @@ export default async function HomePage() {
                 {/* Screenshot Frame */}
                 <div className="aspect-[16/10] bg-[#111416] border-b border-[#2B3033] overflow-hidden relative">
                   <Image
-                    src={project.image || '/project/rosy-garden.png'}
+                    src={project.coverImage || project.image || '/project/rosy-garden.png'}
                     alt={project.title}
                     width={480}
                     height={300}
@@ -300,12 +300,12 @@ export default async function HomePage() {
                     {project.title}
                   </h3>
                   <p className="text-xs text-[#A7ADB2] line-clamp-2 leading-relaxed">
-                    {project.description}
+                    {project.shortDescription || project.description}
                   </p>
 
                   {/* Tech Tags */}
                   <div className="flex flex-wrap gap-1.5 pt-2">
-                    {project.technologies?.slice(0, 3).map((tech: string) => (
+                    {(project.tags || project.technologies || []).slice(0, 3).map((tech: string) => (
                       <span
                         key={tech}
                         className="px-2.5 py-1 rounded-full bg-[#202326] text-[11px] font-mono-code text-[#A7ADB2] border border-[#2B3033]"

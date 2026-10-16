@@ -1,6 +1,8 @@
 import './globals.css';
 import React from 'react';
 import { Inter, Outfit } from 'next/font/google';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
 import { SITE_URL } from '@/lib/seo';
 
 const inter = Inter({
@@ -102,6 +104,8 @@ export default function RootLayout({
         className="bg-[#0B0D0E] text-[#F7F7F2] antialiased selection:bg-[#FFB020]/20 selection:text-[#FFD43B]"
       >
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
