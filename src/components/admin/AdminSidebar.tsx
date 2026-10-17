@@ -33,7 +33,7 @@ export default function AdminSidebar({ admin }: AdminSidebarProps) {
   const navItems = [
     { label: 'Overview', href: '/admin', icon: LayoutDashboard },
     { label: 'Projects', href: '/admin/projects', icon: FolderGit2 },
-    { label: 'Profile', href: '/admin/profile', icon: User },
+    { label: 'Profile & Hero', href: '/admin/profile', icon: User },
     { label: 'Experience', href: '/admin/experience', icon: Briefcase },
     { label: 'Education & Certs', href: '/admin/education', icon: GraduationCap },
     { label: 'Technical Skills', href: '/admin/skills', icon: Cpu },

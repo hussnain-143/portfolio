@@ -140,7 +140,7 @@ export default async function ProjectDetailPage({
       {/* Main Cover Image */}
       <div className="relative h-64 sm:h-96 w-full rounded-3xl overflow-hidden border border-[#2B3033] shadow-2xl bg-[#111416]">
         <Image
-          src={project.coverImage}
+          src={project.coverImage || '/project/rosy-garden.png'}
           alt={project.title}
           fill
           priority
@@ -155,7 +155,7 @@ export default async function ProjectDetailPage({
           Technologies &amp; Tools
         </h3>
         <div className="flex flex-wrap gap-2">
-          {project.tags.map((tag: string, idx: number) => (
+          {(project.tags || []).map((tag: string, idx: number) => (
             <span
               key={idx}
               className="text-xs px-3 py-1 rounded-full bg-[#202326] text-[#F7F7F2] border border-[#2B3033] font-mono-code"

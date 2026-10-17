@@ -83,7 +83,7 @@ export default function ProjectsCatalog({ initialProjects }: { initialProjects: 
             >
               <div className="relative h-56 sm:h-64 bg-[#111416] overflow-hidden">
                 <Image
-                  src={p.coverImage}
+                  src={p.coverImage || '/project/rosy-garden.png'}
                   alt={p.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -110,7 +110,7 @@ export default function ProjectsCatalog({ initialProjects }: { initialProjects: 
 
                 <div className="space-y-4">
                   <div className="flex flex-wrap gap-1.5">
-                    {p.tags.map((tag, idx) => (
+                    {(p.tags || []).map((tag, idx) => (
                       <span
                         key={idx}
                         className="text-[10px] px-2.5 py-0.5 rounded-full bg-[#202326] text-[#A7ADB2] border border-[#2B3033] font-mono-code"

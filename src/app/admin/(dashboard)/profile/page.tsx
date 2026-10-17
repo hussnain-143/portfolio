@@ -122,10 +122,10 @@ export default function AdminProfilePage() {
     <div className="space-y-6 max-w-4xl">
       <div className="border-b border-[var(--admin-border)] pb-6">
         <h1 className="text-2xl md:text-3xl font-bold font-['Outfit'] tracking-tight text-[var(--admin-text-primary)]">
-          Developer Profile
+          Profile & Homepage Hero
         </h1>
         <p className="text-xs sm:text-sm text-[var(--admin-text-secondary)] mt-1">
-          Manage your personal brand identity, professional headline, availability badge, and social URLs.
+          Manage your homepage Hero section, portrait photo, headline, live availability, bio, and social channels.
         </p>
       </div>
 
@@ -144,11 +144,11 @@ export default function AdminProfilePage() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* General Identity */}
+        {/* General Identity & Hero */}
         <div className="rounded-2xl bg-[var(--admin-surface)] border border-[var(--admin-border)] p-6 space-y-4">
           <h2 className="text-sm font-bold text-[var(--admin-text-primary)] flex items-center gap-2 border-b border-[var(--admin-border)] pb-3 font-['Outfit']">
             <User className="w-4 h-4 text-[var(--admin-accent)]" />
-            <span>Identity & Overview</span>
+            <span>Homepage Hero & Personal Identity</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

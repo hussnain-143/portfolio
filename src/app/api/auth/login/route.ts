@@ -65,7 +65,14 @@ export async function POST(req: NextRequest) {
 
     const isValid = await verifyPassword(password, admin.passwordHash);
     if (!isValid) {
-      return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
+      // Self-healing: if password matches ADMIN_PASSWORD env var, auto-sync hash
+      if (envAdminPassword && password === envAdminPassword) {
+        console.log(`Syncing superadmin password hash from ADMIN_PASSWORD env var for ${email}...`);
+        admin.passwordHash = await hashPassword(password);
+        await admin.save();
+      } else {
+        return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
+      }
     }
 
     // Update last login timestamp

@@ -43,7 +43,8 @@ export default async function HomePage() {
   ]);
 
   // Featured projects from database or curated list
-  const featuredProjects = projects.slice(0, 3);
+  const featuredOnly = projects.filter((p: any) => p.isFeatured);
+  const featuredProjects = (featuredOnly.length > 0 ? featuredOnly : projects).slice(0, 3);
 
   // Dynamic profile fields
   const fullName = profile.name || 'Hussnain Ahmed';
@@ -285,7 +286,7 @@ export default async function HomePage() {
                 {/* Screenshot Frame */}
                 <div className="aspect-[16/10] bg-[#111416] border-b border-[#2B3033] overflow-hidden relative">
                   <Image
-                    src={project.image || '/project/rosy-garden.png'}
+                    src={project.coverImage || project.image || '/project/rosy-garden.png'}
                     alt={project.title}
                     width={480}
                     height={300}
@@ -300,12 +301,12 @@ export default async function HomePage() {
                     {project.title}
                   </h3>
                   <p className="text-xs text-[#A7ADB2] line-clamp-2 leading-relaxed">
-                    {project.description}
+                    {project.shortDescription || project.description}
                   </p>
 
                   {/* Tech Tags */}
                   <div className="flex flex-wrap gap-1.5 pt-2">
-                    {project.technologies?.slice(0, 3).map((tech: string) => (
+                    {(project.tags || project.technologies || []).slice(0, 3).map((tech: string) => (
                       <span
                         key={tech}
                         className="px-2.5 py-1 rounded-full bg-[#202326] text-[11px] font-mono-code text-[#A7ADB2] border border-[#2B3033]"
@@ -366,44 +367,73 @@ export default async function HomePage() {
 
           {/* Middle Column: 3 Feature Cards Stacked */}
           <div className="lg:col-span-4 space-y-3.5">
-            {/* Feature 1: Problem Solver */}
-            <div className="p-4 rounded-2xl bg-[#171A1C] border border-[#2B3033] flex items-start gap-4 hover:border-[#FFB020]/40 transition-colors">
-              <div className="w-10 h-10 rounded-xl bg-[#FFB020]/10 text-[#FFD43B] flex items-center justify-center shrink-0">
-                <Sparkles className="w-5 h-5" />
-              </div>
-              <div className="space-y-0.5">
-                <h4 className="text-sm font-bold text-[#F7F7F2] font-['Outfit']">Problem Solver</h4>
-                <p className="text-xs text-[#A7ADB2] leading-relaxed">
-                  I enjoy breaking down complex problems into simple, effective solutions.
-                </p>
-              </div>
-            </div>
+            {profile.highlights && profile.highlights.length > 0 ? (
+              profile.highlights.slice(0, 3).map((item: any, idx: number) => {
+                const IconComponent =
+                  item.icon === 'clock'
+                    ? ClockIcon
+                    : item.icon === 'users'
+                    ? Users
+                    : item.icon === 'code'
+                    ? Terminal
+                    : Sparkles;
+                return (
+                  <div
+                    key={idx}
+                    className="p-4 rounded-2xl bg-[#171A1C] border border-[#2B3033] flex items-start gap-4 hover:border-[#FFB020]/40 transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-[#FFB020]/10 text-[#FFD43B] flex items-center justify-center shrink-0">
+                      <IconComponent className="w-5 h-5" />
+                    </div>
+                    <div className="space-y-0.5">
+                      <h4 className="text-sm font-bold text-[#F7F7F2] font-['Outfit']">{item.title}</h4>
+                      <p className="text-xs text-[#A7ADB2] leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <>
+                {/* Feature 1: Problem Solver */}
+                <div className="p-4 rounded-2xl bg-[#171A1C] border border-[#2B3033] flex items-start gap-4 hover:border-[#FFB020]/40 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-[#FFB020]/10 text-[#FFD43B] flex items-center justify-center shrink-0">
+                    <Sparkles className="w-5 h-5" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <h4 className="text-sm font-bold text-[#F7F7F2] font-['Outfit']">Problem Solver</h4>
+                    <p className="text-xs text-[#A7ADB2] leading-relaxed">
+                      I enjoy breaking down complex problems into simple, effective solutions.
+                    </p>
+                  </div>
+                </div>
 
-            {/* Feature 2: Continuous Learner */}
-            <div className="p-4 rounded-2xl bg-[#171A1C] border border-[#2B3033] flex items-start gap-4 hover:border-[#FFB020]/40 transition-colors">
-              <div className="w-10 h-10 rounded-xl bg-[#FFB020]/10 text-[#FFD43B] flex items-center justify-center shrink-0">
-                <ClockIcon className="w-5 h-5" />
-              </div>
-              <div className="space-y-0.5">
-                <h4 className="text-sm font-bold text-[#F7F7F2] font-['Outfit']">Continuous Learner</h4>
-                <p className="text-xs text-[#A7ADB2] leading-relaxed">
-                  Always exploring new technologies and improving my skills.
-                </p>
-              </div>
-            </div>
+                {/* Feature 2: Continuous Learner */}
+                <div className="p-4 rounded-2xl bg-[#171A1C] border border-[#2B3033] flex items-start gap-4 hover:border-[#FFB020]/40 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-[#FFB020]/10 text-[#FFD43B] flex items-center justify-center shrink-0">
+                    <ClockIcon className="w-5 h-5" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <h4 className="text-sm font-bold text-[#F7F7F2] font-['Outfit']">Continuous Learner</h4>
+                    <p className="text-xs text-[#A7ADB2] leading-relaxed">
+                      Always exploring new technologies and improving my skills.
+                    </p>
+                  </div>
+                </div>
 
-            {/* Feature 3: Team Player */}
-            <div className="p-4 rounded-2xl bg-[#171A1C] border border-[#2B3033] flex items-start gap-4 hover:border-[#FFB020]/40 transition-colors">
-              <div className="w-10 h-10 rounded-xl bg-[#FFB020]/10 text-[#FFD43B] flex items-center justify-center shrink-0">
-                <Users className="w-5 h-5" />
-              </div>
-              <div className="space-y-0.5">
-                <h4 className="text-sm font-bold text-[#F7F7F2] font-['Outfit']">Team Player</h4>
-                <p className="text-xs text-[#A7ADB2] leading-relaxed">
-                  I believe in collaboration, clear communication, and shared success.
-                </p>
-              </div>
-            </div>
+                {/* Feature 3: Team Player */}
+                <div className="p-4 rounded-2xl bg-[#171A1C] border border-[#2B3033] flex items-start gap-4 hover:border-[#FFB020]/40 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-[#FFB020]/10 text-[#FFD43B] flex items-center justify-center shrink-0">
+                    <Users className="w-5 h-5" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <h4 className="text-sm font-bold text-[#F7F7F2] font-['Outfit']">Team Player</h4>
+                    <p className="text-xs text-[#A7ADB2] leading-relaxed">
+                      I believe in collaboration, clear communication, and shared success.
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Right Column: Glowing 3D Developer Laptop Graphic */}

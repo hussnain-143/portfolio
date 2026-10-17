@@ -47,7 +47,7 @@ export default async function ContactPage() {
         </a>
 
         <a
-          href={`tel:${profile.phone.replace(/[^0-9+]/g, '')}`}
+          href={`tel:${(profile.phone || '').replace(/[^0-9+]/g, '')}`}
           className="p-6 rounded-3xl bg-[#171A1C] border border-[#2B3033] hover:border-[#FFB020]/50 transition-all flex flex-col justify-between space-y-4 group"
         >
           <div className="w-10 h-10 rounded-2xl bg-[#FF8A24]/15 text-[#FF8A24] flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -56,7 +56,7 @@ export default async function ContactPage() {
           <div>
             <div className="text-xs text-[#737B82] font-mono-code uppercase tracking-wider">Phone</div>
             <div className="text-xs font-semibold text-[#F7F7F2] mt-0.5 group-hover:text-[#FFD43B] transition-colors">
-              {profile.phone}
+              {profile.phone || '+92 300 0000000'}
             </div>
           </div>
         </a>

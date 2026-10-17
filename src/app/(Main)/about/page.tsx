@@ -115,7 +115,7 @@ export default async function AboutPage() {
                 </p>
 
                 <div className="flex flex-wrap gap-1.5 pt-1">
-                  {exp.skills.map((skill: string, idx: number) => (
+                  {(exp.skills || []).map((skill: string, idx: number) => (
                     <span
                       key={idx}
                       className="text-[10px] px-2 py-0.5 rounded-full bg-[#202326] text-[#A7ADB2] border border-[#2B3033] font-mono-code"
