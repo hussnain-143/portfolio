@@ -5,6 +5,7 @@ import { getProfileData, getEducationData, getExperienceData } from '@/lib/data'
 import { Download, Mail, GraduationCap, Award, Briefcase } from 'lucide-react';
 import { constructMetadata, SITE_URL } from '@/lib/seo';
 import JsonLd from '@/components/JsonLd';
+import FormattedDescription from '@/components/FormattedDescription';
 
 export const metadata = constructMetadata({
   title: 'About Me — Hussnain Ahmed | Full-Stack Developer Background',
@@ -110,9 +111,10 @@ export default async function AboutPage() {
                   </span>
                 </div>
 
-                <p className="text-xs text-[#A7ADB2] leading-relaxed">
-                  {exp.description}
-                </p>
+                <FormattedDescription
+                  text={exp.description}
+                  className="text-xs text-[#A7ADB2]"
+                />
 
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {(exp.skills || []).map((skill: string, idx: number) => (

@@ -267,7 +267,7 @@ export async function seedDatabase() {
       period: 'Aug 2025 - Present',
       isCurrent: true,
       description:
-        'Developed and maintained production web applications using Next.js, React, Node.js, and Tailwind CSS. Collaborated with cross-functional teams to deliver high-quality software solutions.',
+        '• Core developer on Solo, an end-to-end service marketplace platform connecting clients with professionals.\n• Built and optimized scalable backend APIs using Node.js, Express, and Prisma ORM with PostgreSQL.\n• Implemented real-time chat and instant notifications using Socket.io paired with Redis Pub/Sub adapters.\n• Integrated secure payment workflows and subscription billing via Stripe, handling webhook event lifecycles.\n• Architected background processing using BullMQ & Redis for async job queues, media processing, and notifications.\n• Built clean, responsive client-facing interfaces using Next.js, React, and Tailwind CSS.',
       skills: ['React', 'Next.js', 'Node.js', 'Tailwind CSS', 'WordPress'],
       displayOrder: 1,
     },
