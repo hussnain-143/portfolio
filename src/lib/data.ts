@@ -5,6 +5,7 @@ import { Skill, ISkill } from '../models/Skill';
 import { Experience, IExperience } from '../models/Experience';
 import { Education, IEducation } from '../models/Education';
 import { SiteSettings, ISiteSettings } from '../models/SiteSettings';
+import { OpenSource, IOpenSource } from '../models/OpenSource';
 
 // Fallback verified data for resilience when database is connecting or offline
 const fallbackProfile = {
@@ -299,6 +300,98 @@ const fallbackEducation = [
   },
 ];
 
+const fallbackOpenSource = [
+  {
+    _id: 'os1',
+    title: 'Developer Portfolio & Admin Console',
+    slug: 'portfolio-admin-console',
+    repoName: 'hussnain-143/portfolio',
+    description:
+      'High-performance full-stack portfolio with custom dark-mode admin CMS, real-time message inbox, dynamic project manager, and SEO optimizations.',
+    githubUrl: 'https://github.com/hussnain-143/portfolio',
+    liveUrl: 'https://h-a-portfolio.netlify.app',
+    role: 'Author',
+    stars: 28,
+    forks: 7,
+    language: 'TypeScript',
+    tags: ['Next.js', 'React', 'Tailwind CSS', 'MongoDB', 'Mongoose'],
+    isFeatured: true,
+    isPublished: true,
+    displayOrder: 1,
+    highlights: [
+      'Next.js 16 App Router architecture',
+      'JWT role-based admin authentication & CRUD',
+      'Full responsive UI with custom micro-animations',
+    ],
+  },
+  {
+    _id: 'os2',
+    title: 'Rosy Garden — E-Commerce Storefront',
+    slug: 'rosy-garden-ecommerce',
+    repoName: 'hussnain-143/rosy-garden',
+    description:
+      'Curated floral arrangement boutique web application featuring interactive catalog browsing, dynamic product layouts, and smooth cart flows.',
+    githubUrl: 'https://github.com/hussnain-143/rosy-garden',
+    liveUrl: 'https://rosy-garden-shop.vercel.app/',
+    role: 'Author',
+    stars: 18,
+    forks: 4,
+    language: 'JavaScript',
+    tags: ['React', 'Next.js', 'Tailwind CSS', 'Vercel'],
+    isFeatured: true,
+    isPublished: true,
+    displayOrder: 2,
+    highlights: [
+      'Next.js image optimization for high-res galleries',
+      'Fluid mobile-first shopping experience',
+    ],
+  },
+  {
+    _id: 'os3',
+    title: 'Advanced Personal Finance Tracker',
+    slug: 'advanced-finance-tracker',
+    repoName: 'hussnain-143/finance-tracker',
+    description:
+      'Analytical financial dashboard with visual analytics, budget tracking, transaction categorization, and trend visualization using Chart.js.',
+    githubUrl: 'https://github.com/hussnain-143/finance-tracker',
+    liveUrl: 'https://adv-finance-tracker.netlify.app',
+    role: 'Author',
+    stars: 15,
+    forks: 3,
+    language: 'JavaScript',
+    tags: ['React', 'Chart.js', 'Tailwind CSS', 'REST API'],
+    isFeatured: true,
+    isPublished: true,
+    displayOrder: 3,
+    highlights: [
+      'Interactive Chart.js visualizations for income and expenses',
+      'Real-time cashflow breakdowns and savings tracker',
+    ],
+  },
+  {
+    _id: 'os4',
+    title: 'E-Store — Redux Toolkit Online Store',
+    slug: 'e-store-redux',
+    repoName: 'hussnain-143/e.store',
+    description:
+      'Modern online storefront with shopping cart persistence, category browsing, product filtering, and streamlined checkout experience.',
+    githubUrl: 'https://github.com/hussnain-143/e.store',
+    liveUrl: 'https://e-s-store.netlify.app/',
+    role: 'Author',
+    stars: 12,
+    forks: 2,
+    language: 'TypeScript',
+    tags: ['Next.js', 'Redux Toolkit', 'Tailwind CSS'],
+    isFeatured: false,
+    isPublished: true,
+    displayOrder: 4,
+    highlights: [
+      'Redux Toolkit state management with cart persistence',
+      'Filter by category, rating, and price spectrum',
+    ],
+  },
+];
+
 export async function getProfileData() {
   try {
     if (process.env.MONGODB_URI) {
@@ -401,4 +494,25 @@ export async function getSiteSettingsData() {
     showClock: true,
     showAvailabilityBadge: true,
   };
+}
+
+export async function getOpenSourceData() {
+  try {
+    if (process.env.MONGODB_URI) {
+      await connectToDatabase();
+      const repos = await OpenSource.find({ isPublished: true })
+        .sort({ displayOrder: 1, createdAt: -1 })
+        .lean();
+      if (repos && repos.length > 0) return JSON.parse(JSON.stringify(repos));
+    }
+  } catch (err) {
+    console.error('Error fetching open source repos from MongoDB, using fallback:', err);
+  }
+  return fallbackOpenSource;
+}
+
+export async function getFeaturedOpenSourceData() {
+  const all = await getOpenSourceData();
+  const featured = all.filter((r: any) => r.isFeatured);
+  return featured.length > 0 ? featured : all.slice(0, 3);
 }
