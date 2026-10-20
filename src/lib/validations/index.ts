@@ -121,3 +121,26 @@ export const siteSettingsSchema = z.object({
   emailNotificationsEnabled: z.boolean().default(false),
   notificationEmail: z.string().email().optional(),
 });
+
+export const openSourceSchema = z.object({
+  title: z.string().min(2, 'Title is required').max(120).trim(),
+  slug: z
+    .string()
+    .min(2, 'Slug is required')
+    .max(120)
+    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Slug must be lowercase alphanumeric with hyphens')
+    .trim(),
+  repoName: z.string().min(2, 'Repository name is required').max(100).trim(),
+  description: z.string().min(5, 'Description is required').max(500).trim(),
+  githubUrl: z.string().url('Must be a valid GitHub URL').trim(),
+  liveUrl: z.string().url().or(z.literal('')).optional().default(''),
+  role: z.enum(['Author', 'Maintainer', 'Contributor']).default('Author'),
+  stars: z.coerce.number().int().min(0).default(0),
+  forks: z.coerce.number().int().min(0).default(0),
+  language: z.string().min(1).max(50).trim().default('TypeScript'),
+  tags: z.array(z.string().trim()).default([]),
+  isFeatured: z.boolean().default(true),
+  isPublished: z.boolean().default(true),
+  displayOrder: z.coerce.number().int().default(0),
+  highlights: z.array(z.string().trim()).optional().default([]),
+});

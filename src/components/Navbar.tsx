@@ -39,6 +39,7 @@ export default function Navbar({
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Projects', path: '/projects' },
+    { name: 'Open Source', path: '/opensource' },
     { name: 'Experience', path: '/experience' },
     { name: 'Skills', path: '/skills' },
     { name: 'Contact', path: '/contact' },

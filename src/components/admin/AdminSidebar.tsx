@@ -16,6 +16,7 @@ import {
   Menu,
   X,
   ExternalLink,
+  GitPullRequest,
 } from 'lucide-react';
 import Image from 'next/image';
 import { SessionPayload } from '@/lib/auth';
@@ -33,6 +34,7 @@ export default function AdminSidebar({ admin }: AdminSidebarProps) {
   const navItems = [
     { label: 'Overview', href: '/admin', icon: LayoutDashboard },
     { label: 'Projects', href: '/admin/projects', icon: FolderGit2 },
+    { label: 'Open Source', href: '/admin/opensource', icon: GitPullRequest },
     { label: 'Profile & Hero', href: '/admin/profile', icon: User },
     { label: 'Experience', href: '/admin/experience', icon: Briefcase },
     { label: 'Education & Certs', href: '/admin/education', icon: GraduationCap },

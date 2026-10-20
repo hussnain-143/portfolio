@@ -18,6 +18,7 @@ import {
   Sparkles,
   User,
   CheckCircle2,
+  GitPullRequest,
 } from 'lucide-react';
 
 interface Stats {
@@ -28,6 +29,7 @@ interface Stats {
   totalMessages: number;
   skillsCount: number;
   experienceCount: number;
+  openSourceCount?: number;
 }
 
 interface Message {
@@ -261,7 +263,7 @@ export default function AdminDashboardPage() {
       )}
 
       {/* Metric Cards (Real Database Data) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {/* Published Projects */}
         <div className="rounded-2xl bg-[var(--admin-surface)] border border-[var(--admin-border)] p-5 relative overflow-hidden group hover:border-[var(--admin-accent)]/40 transition-all">
           <div className="flex items-center justify-between">
@@ -278,6 +280,25 @@ export default function AdminDashboardPage() {
           <div className="text-xs text-[var(--admin-text-secondary)] mt-1.5 flex items-center gap-1.5 font-mono">
             <span className="text-[var(--admin-accent)] font-semibold">{stats?.draftProjects ?? 0} draft(s)</span>
             <span>in workspace</span>
+          </div>
+        </div>
+
+        {/* Open Source Repositories */}
+        <div className="rounded-2xl bg-[var(--admin-surface)] border border-[var(--admin-border)] p-5 relative overflow-hidden group hover:border-[#FFB020]/40 transition-all">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-semibold text-[var(--admin-text-secondary)] uppercase tracking-wider font-mono">
+              Open Source
+            </span>
+            <div className="w-9 h-9 rounded-xl bg-[#FFB020]/10 text-[#FFB020] flex items-center justify-center">
+              <GitPullRequest className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-3xl font-bold mt-3 text-[var(--admin-text-primary)] font-['Outfit']">
+            {stats?.openSourceCount ?? 4}
+          </div>
+          <div className="text-xs text-[var(--admin-text-secondary)] mt-1.5 font-mono flex items-center gap-1.5">
+            <span className="text-[#FFB020] font-semibold">Community</span>
+            <span>repos managed</span>
           </div>
         </div>
 
@@ -338,13 +359,20 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Quick Action Shortcuts */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
         <Link
           href="/admin/projects"
           className="p-3.5 rounded-xl bg-[var(--admin-surface)] border border-[var(--admin-border)] hover:border-[var(--admin-accent)] transition-all flex items-center justify-between text-xs font-semibold text-[var(--admin-text-secondary)] hover:text-[var(--admin-text-primary)]"
         >
           <span>Projects Directory</span>
           <ArrowUpRight className="w-3.5 h-3.5 text-[var(--admin-accent)]" />
+        </Link>
+        <Link
+          href="/admin/opensource"
+          className="p-3.5 rounded-xl bg-[var(--admin-surface)] border border-[var(--admin-border)] hover:border-[#FFB020] transition-all flex items-center justify-between text-xs font-semibold text-[var(--admin-text-secondary)] hover:text-[var(--admin-text-primary)]"
+        >
+          <span>Open Source</span>
+          <ArrowUpRight className="w-3.5 h-3.5 text-[#FFB020]" />
         </Link>
         <Link
           href="/admin/skills"

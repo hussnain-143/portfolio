@@ -8,6 +8,7 @@ import { Skill } from '../models/Skill';
 import { Experience } from '../models/Experience';
 import { Education } from '../models/Education';
 import { SiteSettings } from '../models/SiteSettings';
+import { OpenSource } from '../models/OpenSource';
 
 dotenv.config({ path: '.env.local' });
 dotenv.config();
@@ -378,13 +379,112 @@ export async function seedDatabase() {
         { label: 'Projects', path: '/projects', icon: 'folder' },
         { label: 'Experience', path: '/experience', icon: 'briefcase' },
         { label: 'Skills', path: '/skills', icon: 'cpu' },
+        { label: 'Open Source', path: '/opensource', icon: 'code' },
         { label: 'Contact', path: '/contact', icon: 'mail' },
       ],
     },
     { upsert: true, new: true }
   );
 
-  // 7. Seed Default Admin if credentials provided
+  // 7. Seed Open Source Repositories
+  console.log('Seeding Open Source Projects...');
+  const initialOpenSource = [
+    {
+      title: 'Developer Portfolio & Admin Console',
+      slug: 'portfolio-admin-console',
+      repoName: 'hussnain-143/portfolio',
+      description:
+        'High-performance full-stack portfolio with custom dark-mode admin CMS, real-time message inbox, dynamic project manager, and SEO optimizations.',
+      githubUrl: 'https://github.com/hussnain-143/portfolio',
+      liveUrl: 'https://h-a-portfolio.netlify.app',
+      role: 'Author',
+      stars: 28,
+      forks: 7,
+      language: 'TypeScript',
+      tags: ['Next.js', 'React', 'Tailwind CSS', 'MongoDB', 'Mongoose'],
+      isFeatured: true,
+      isPublished: true,
+      displayOrder: 1,
+      highlights: [
+        'Next.js 16 App Router architecture',
+        'JWT role-based admin authentication & CRUD',
+        'Full responsive UI with custom micro-animations',
+      ],
+    },
+    {
+      title: 'Rosy Garden — E-Commerce Storefront',
+      slug: 'rosy-garden-ecommerce',
+      repoName: 'hussnain-143/rosy-garden',
+      description:
+        'Curated floral arrangement boutique web application featuring interactive catalog browsing, dynamic product layouts, and smooth cart flows.',
+      githubUrl: 'https://github.com/hussnain-143/rosy-garden',
+      liveUrl: 'https://rosy-garden-shop.vercel.app/',
+      role: 'Author',
+      stars: 18,
+      forks: 4,
+      language: 'JavaScript',
+      tags: ['React', 'Next.js', 'Tailwind CSS', 'Vercel'],
+      isFeatured: true,
+      isPublished: true,
+      displayOrder: 2,
+      highlights: [
+        'Next.js image optimization for high-res galleries',
+        'Fluid mobile-first shopping experience',
+      ],
+    },
+    {
+      title: 'Advanced Personal Finance Tracker',
+      slug: 'advanced-finance-tracker',
+      repoName: 'hussnain-143/finance-tracker',
+      description:
+        'Analytical financial dashboard with visual analytics, budget tracking, transaction categorization, and trend visualization using Chart.js.',
+      githubUrl: 'https://github.com/hussnain-143/finance-tracker',
+      liveUrl: 'https://adv-finance-tracker.netlify.app',
+      role: 'Author',
+      stars: 15,
+      forks: 3,
+      language: 'JavaScript',
+      tags: ['React', 'Chart.js', 'Tailwind CSS', 'REST API'],
+      isFeatured: true,
+      isPublished: true,
+      displayOrder: 3,
+      highlights: [
+        'Interactive Chart.js visualizations for income and expenses',
+        'Real-time cashflow breakdowns and savings tracker',
+      ],
+    },
+    {
+      title: 'E-Store — Redux Toolkit Online Store',
+      slug: 'e-store-redux',
+      repoName: 'hussnain-143/e.store',
+      description:
+        'Modern online storefront with shopping cart persistence, category browsing, product filtering, and streamlined checkout experience.',
+      githubUrl: 'https://github.com/hussnain-143/e.store',
+      liveUrl: 'https://e-s-store.netlify.app/',
+      role: 'Author',
+      stars: 12,
+      forks: 2,
+      language: 'TypeScript',
+      tags: ['Next.js', 'Redux Toolkit', 'Tailwind CSS'],
+      isFeatured: false,
+      isPublished: true,
+      displayOrder: 4,
+      highlights: [
+        'Redux Toolkit state management with cart persistence',
+        'Filter by category, rating, and price spectrum',
+      ],
+    },
+  ];
+
+  for (const item of initialOpenSource) {
+    await OpenSource.findOneAndUpdate({ slug: item.slug }, item, {
+      upsert: true,
+      new: true,
+    });
+  }
+  console.log(`✓ Seeded ${initialOpenSource.length} Open Source repositories`);
+
+  // 8. Seed Default Admin if credentials provided
   const adminEmail = (process.env.ADMIN_EMAIL || 'admin@hussnain.dev').toLowerCase();
   const adminPassword = process.env.ADMIN_PASSWORD || 'AdminPassword123!';
   const existingAdmin = await AdminUser.findOne({ email: adminEmail });

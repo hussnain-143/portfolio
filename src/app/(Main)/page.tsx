@@ -7,6 +7,7 @@ import {
   getSkillsData,
   getExperienceData,
   getEducationData,
+  getFeaturedOpenSourceData,
 } from '@/lib/data';
 import {
   ArrowRight,
@@ -18,6 +19,12 @@ import {
   Layers,
   Users,
   Terminal,
+  Github,
+  GitPullRequest,
+  GitFork,
+  Star,
+  ExternalLink,
+  Code2,
 } from 'lucide-react';
 
 import { constructMetadata, SITE_URL } from '@/lib/seo';
@@ -34,12 +41,13 @@ export const metadata = constructMetadata({
 });
 
 export default async function HomePage() {
-  const [profile, projects, skills, experiences, education] = await Promise.all([
+  const [profile, projects, skills, experiences, education, openSource] = await Promise.all([
     getProfileData(),
     getPublishedProjects(),
     getSkillsData(),
     getExperienceData(),
     getEducationData(),
+    getFeaturedOpenSourceData(),
   ]);
 
   // Featured projects from database or curated list
@@ -570,7 +578,173 @@ export default async function HomePage() {
       </section>
 
       {/* =========================================================================
-          5. CONTACT CALL-TO-ACTION BANNER
+          5. OPEN SOURCE & COMMUNITY CONTRIBUTIONS (Easily Configurable from Admin)
+          ========================================================================= */}
+      <section className="space-y-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 text-xs font-mono-code text-[#FFB020] uppercase tracking-wider">
+              <GitPullRequest className="w-3.5 h-3.5" />
+              <span>OPEN SOURCE &amp; COMMUNITY</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#F7F7F2] font-['Outfit']">
+              Open Source <span className="text-[#FFD43B]">Contributions</span>
+            </h2>
+            <p className="text-xs sm:text-sm text-[#A7ADB2] max-w-xl">
+              I believe in building in public and giving back to the community. Here are developer tools, reusable libraries, and open-source applications I architect and maintain.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Link
+              href="/opensource"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#171A1C] border border-[#2B3033] hover:border-[#FFB020]/60 text-xs font-semibold text-[#F7F7F2] hover:text-[#FFD43B] transition-all self-start md:self-auto cursor-pointer"
+            >
+              <span>Explore All Repos</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Repositories Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {openSource.map((repo: any) => {
+            const langColor =
+              repo.language === 'TypeScript'
+                ? '#3178C6'
+                : repo.language === 'JavaScript'
+                ? '#F7DF1E'
+                : repo.language === 'Python'
+                ? '#3776AB'
+                : '#FFB020';
+
+            return (
+              <div
+                key={repo._id || repo.slug}
+                className="group rounded-2xl bg-[#171A1C] border border-[#2B3033] hover:border-[#FFB020]/50 p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-xl hover:shadow-[#FFB020]/10"
+              >
+                <div className="space-y-4">
+                  {/* Top Bar: Repo Name, Role, Stars & Forks */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-[#202326] border border-[#2B3033] flex items-center justify-center text-[#F7F7F2] group-hover:text-[#FFD43B] transition-colors">
+                        <Github className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <span className="font-mono text-[11px] text-[#A7ADB2] block">
+                          {repo.repoName || 'hussnain-143/repo'}
+                        </span>
+                        <div className="inline-flex items-center gap-1.5 mt-0.5">
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#202326] text-[#FFB020] border border-[#2B3033]">
+                            {repo.role || 'Author'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 text-xs font-mono text-[#A7ADB2]">
+                      <div className="flex items-center gap-1">
+                        <Star className="w-3.5 h-3.5 text-[#FFB020] fill-[#FFB020]/20" />
+                        <span>{repo.stars || 0}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <GitFork className="w-3.5 h-3.5 text-blue-400" />
+                        <span>{repo.forks || 0}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Title & Description */}
+                  <div className="space-y-2">
+                    <h3 className="font-bold text-base text-[#F7F7F2] font-['Outfit'] group-hover:text-[#FFD43B] transition-colors">
+                      {repo.title}
+                    </h3>
+                    <p className="text-xs text-[#A7ADB2] leading-relaxed line-clamp-3">
+                      {repo.description}
+                    </p>
+                  </div>
+
+                  {/* Language & Tags */}
+                  <div className="space-y-2.5 pt-1">
+                    <div className="flex items-center gap-2 text-xs font-mono text-[#F7F7F2]">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full shrink-0"
+                        style={{ backgroundColor: langColor }}
+                      />
+                      <span className="text-[11px]">{repo.language || 'TypeScript'}</span>
+                    </div>
+
+                    {repo.tags && repo.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5">
+                        {repo.tags.slice(0, 3).map((tag: string) => (
+                          <span
+                            key={tag}
+                            className="px-2 py-0.5 rounded-full bg-[#202326] text-[10px] font-mono-code text-[#A7ADB2] border border-[#2B3033]"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Footer Action Links */}
+                <div className="pt-5 mt-4 border-t border-[#2B3033] flex items-center justify-between text-xs">
+                  <a
+                    href={repo.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 font-semibold text-[#A7ADB2] hover:text-[#F7F7F2] transition-colors"
+                  >
+                    <Github className="w-3.5 h-3.5" />
+                    <span>Source Code</span>
+                    <ExternalLink className="w-3 h-3 text-[#737B82]" />
+                  </a>
+
+                  {repo.liveUrl ? (
+                    <a
+                      href={repo.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-[#FFB020] hover:text-[#FFD43B] font-semibold transition-colors"
+                    >
+                      <span>Live Preview</span>
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Community Banner footer */}
+        <div className="p-6 rounded-2xl bg-[#171A1C]/60 border border-[#2B3033] flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#202326] border border-[#2B3033] flex items-center justify-center text-[#FFB020] shrink-0">
+              <Code2 className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-sm font-bold text-[#F7F7F2]">Interested in collaborating on open-source?</div>
+              <p className="text-xs text-[#A7ADB2]">Check out all repositories, commit logs, and starred projects on GitHub.</p>
+            </div>
+          </div>
+          <a
+            href={profile.githubUrl || 'https://github.com/hussnain-143'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#202326] hover:bg-[#2B3033] text-xs font-semibold text-[#F7F7F2] border border-[#2B3033] transition-colors shrink-0"
+          >
+            <Github className="w-3.5 h-3.5" />
+            <span>Visit @hussnain-143</span>
+            <ExternalLink className="w-3 h-3 text-[#A7ADB2]" />
+          </a>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          6. CONTACT CALL-TO-ACTION BANNER
           ========================================================================= */}
       <section className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#171A1C] via-[#202326] to-[#171A1C] border border-[#2B3033] relative overflow-hidden text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-8">
         <div className="space-y-2 max-w-xl">

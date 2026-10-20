@@ -6,6 +6,7 @@ import { ContactMessage } from '@/models/ContactMessage';
 import { Skill } from '@/models/Skill';
 import { Experience } from '@/models/Experience';
 import { Profile } from '@/models/Profile';
+import { OpenSource } from '@/models/OpenSource';
 
 export async function GET() {
   try {
@@ -21,6 +22,7 @@ export async function GET() {
           totalMessages: 0,
           skillsCount: 20,
           experienceCount: 3,
+          openSourceCount: 4,
         },
         recentMessages: [],
         recentProjects: [],
@@ -36,6 +38,7 @@ export async function GET() {
       totalMessages,
       skillsCount,
       experienceCount,
+      openSourceCount,
       recentMessages,
       recentProjects,
       profile,
@@ -46,6 +49,7 @@ export async function GET() {
       ContactMessage.countDocuments(),
       Skill.countDocuments(),
       Experience.countDocuments(),
+      OpenSource.countDocuments(),
       ContactMessage.find().sort({ createdAt: -1 }).limit(5).lean(),
       Project.find().sort({ updatedAt: -1 }).limit(5).lean(),
       Profile.findOne().lean(),
@@ -60,6 +64,7 @@ export async function GET() {
         totalMessages,
         skillsCount,
         experienceCount,
+        openSourceCount,
       },
       recentMessages: JSON.parse(JSON.stringify(recentMessages)),
       recentProjects: JSON.parse(JSON.stringify(recentProjects)),
