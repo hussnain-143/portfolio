@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getExperienceData, getProfileData } from '@/lib/data';
 import { Download, MapPin } from 'lucide-react';
 import { constructMetadata } from '@/lib/seo';
+import FormattedDescription from '@/components/FormattedDescription';
 
 export const metadata = constructMetadata({
   title: 'Work Experience — Hussnain Ahmed | Full-Stack Career History',
@@ -75,9 +76,10 @@ export default async function ExperiencePage() {
                 </div>
               )}
 
-              <p className="text-xs sm:text-sm text-[#A7ADB2] leading-relaxed max-w-3xl">
-                {exp.description}
-              </p>
+              <FormattedDescription
+                text={exp.description}
+                className="text-xs sm:text-sm text-[#A7ADB2] max-w-3xl"
+              />
 
               {/* Skills */}
               <div className="pt-2">

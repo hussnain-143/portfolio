@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Briefcase, Plus, Edit, Trash2, X, AlertCircle, CheckCircle2, Calendar, MapPin } from 'lucide-react';
+import FormattedDescription from '@/components/FormattedDescription';
 
 interface Experience {
   _id: string;
@@ -225,9 +226,10 @@ export default function AdminExperiencePage() {
                   <span>• Order: #{exp.displayOrder}</span>
                 </div>
 
-                <p className="text-xs text-[var(--admin-text-secondary)] leading-relaxed max-w-3xl pt-1">
-                  {exp.description}
-                </p>
+                <FormattedDescription
+                  text={exp.description}
+                  className="text-xs text-[var(--admin-text-secondary)] max-w-3xl pt-1"
+                />
 
                 <div className="flex flex-wrap gap-1.5 pt-2">
                   {exp.skills.map((skill, idx) => (
@@ -367,6 +369,9 @@ export default function AdminExperiencePage() {
                   placeholder="Key responsibilities, team leadership, systems architected..."
                   className="w-full px-3.5 py-2 rounded-xl bg-[var(--admin-elevated)] border border-[var(--admin-border)] text-xs text-[var(--admin-text-primary)] focus:outline-none focus:border-[var(--admin-accent)] leading-relaxed"
                 />
+                <p className="text-[11px] text-[var(--admin-text-secondary)] mt-1.5 font-mono">
+                  💡 Tip: Use bullet symbols (•), hyphens (-), or separate lines. They will automatically render as distinct points.
+                </p>
               </div>
 
               <div>
